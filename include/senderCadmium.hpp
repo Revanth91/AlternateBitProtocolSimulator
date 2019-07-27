@@ -21,7 +21,7 @@
 #include <limits>
 #include <random>
 
-#include "../data_structures/message.hpp"
+#include "message.hpp"
 
 using namespace cadmium;
 using namespace std;
