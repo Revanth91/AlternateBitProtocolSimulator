@@ -3,7 +3,7 @@ CFLAGS=-std=c++17
 
 INCLUDECADMIUM=-I lib/cadmium/include
 
-all: main.o ../data_structures/message.o 
+all: main.o ../build/message.o 
 	$(CC) -g -o bin/ABP build/main_top_model.o build/message.o
 	$(CC) -g -o bin/SUBNET_TEST build/main_subnet.o build/message.o 
 	$(CC) -g -o bin/SENDER_TEST build/main_sender.o build/message.o 
@@ -15,8 +15,8 @@ main.o: src/top_model/main.cpp
 	$(CC) -g -c $(CFLAGS) $(INCLUDECADMIUM) test/src/sender/main.cpp -o build/main_sender.o
 	$(CC) -g -c $(CFLAGS) $(INCLUDECADMIUM) test/src/receiver/main.cpp -o build/main_receiver.o
 
-../data_structures/message.o: 
-	$(CC) -g -c $(CFLAGS) $(INCLUDECADMIUM) src/message.cpp -o build/message.o
+../build/message.o: 
+	$(CC) -g -c $(CFLAGS) $(INCLUDECADMIUM) src/data_structures/message.cpp -o build/message.o
 
 clean:
 	rm -f ABP build/*.o bin/*
