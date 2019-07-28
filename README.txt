@@ -54,11 +54,30 @@ some data for testing and some simulator outputs]
 
 0 - alternatebitprotocol.doc contains the explanation of this simulator
 
-1 - Update include paths in all the makefiles in this folder and subfolders. You need to update the following lines:
+1 - Update include paths in the makefile of this folder. You need to update the following lines:
 	INCLUDECADMIUM=-I ../../cadmium/include
     Update the relative path to cadmium/include from the folder where the makefile is. You need to take into account where you copied the folder during the installation process
-	Example: INCLUDECADMIUM=-I ../../cadmium/include
-    
+	Example: INCLUDECADMIUM=-I lib/cadmium/include
+
+2 - Run the simulator
+		1 - Open the terminal. Press in your keyboard Ctrl+Alt+t
+		2 - Set the command prompt in the AlternateBitProtocol folder. To do so, type in the terminal the path to this folder.
+			Example: cd ../../AlternateBitProtocol
+		3 - To compile the project, type in the terminal:
+			make clean; make all
+		4 - To run the simulation, go the folder with executable files (i.e., bin folder). To do so, type in the terminal the path to this folder.
+			Example: cd bin
+		5 - In the terminal type "./NAME_OF_THE_COMPILED_FILE NAME_OF_THE_INPUT_FILE". For this test you need to type:
+			./ABP ../data/input/input_abp_1.txt
+		6 - To check the output of the simulation, open "../data/output/abp_output.txt"
+		7 - To execute the simulator with different inputs
+			7.1. Create new .txt files with the same structure as input_abp_0.txt or input_abp_1.txt
+			7.2. Run the simulator using the instructions in step 4
+			7.3. If you want to keep the output, rename abp_output.txt. To do so, type in the terminal: "mv abp_output.txt NEW_NAME"
+			Example: mv abp_output.txt abp_output_0.txt
+
+=====
+
 2 - Run the unit tests
 	2.1. Run subnet test
 		1 - Open the terminal. Press in your keyboard Ctrl+Alt+t
