@@ -1,6 +1,9 @@
 CC=g++
 CFLAGS=-std=c++17
 
+build_folder := $(shell mkdir -p build)
+bin_folder := $(shell mkdir -p bin)
+
 INCLUDECADMIUM=-I lib/cadmium/include
 
 all: main.o ../build/message.o 
