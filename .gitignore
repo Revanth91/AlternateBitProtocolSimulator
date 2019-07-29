@@ -1,0 +1,3 @@
+#It is used to ignore bin and build folder
+bin/*
+build/*
