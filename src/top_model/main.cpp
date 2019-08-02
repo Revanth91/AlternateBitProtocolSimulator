@@ -20,8 +20,8 @@
 #include "../../include/data_structures/message.hpp"
 
 #include "../../include/atomics/senderCadmium.hpp"
-#include "../../include/atomics/receiverCadmium.hpp"
-#include "../../include/atomics/subnetCadmium.hpp"
+#include "../../include/atomics/receivercadmium.hpp"
+#include "../../include/atomics/subnetcadmium.hpp"
 
 
 using namespace std;

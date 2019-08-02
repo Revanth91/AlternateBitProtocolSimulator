@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
-#define _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
+#ifndef __RECEIVER_CADMIUM_HPP__
+#define __RECEIVER_CADMIUM_HPP__
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -115,4 +115,4 @@ class Receiver {
         }
 };     
 
-#endif // _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
+#endif // __RECEIVER_CADMIUM_HPP__

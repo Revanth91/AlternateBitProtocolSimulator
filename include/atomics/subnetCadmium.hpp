@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef _BOOST_SIMULATION_PDEVS_SUBNET_HPP_
-#define _BOOST_SIMULATION_PDEVS_SUBNET_HPP_
+#ifndef __SUBNET_CADMIUM_HPP__
+#define __SUBNET_CADMIUM_HPP__
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -123,4 +123,4 @@ class Subnet {
         }
 };    
 
-#endif // _BOOST_SIMULATION_PDEVS_SUBNET_HPP_
+#endif // __SUBNET_CADMIUM_HPP__
