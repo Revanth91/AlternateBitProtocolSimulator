@@ -1,5 +1,5 @@
-#ifndef BOOST_SIMULATION_MESSAGE_HPP
-#define BOOST_SIMULATION_MESSAGE_HPP
+#ifndef _BOOST_SIMULATION_MESSAGE_HPP_
+#define _BOOST_SIMULATION_MESSAGE_HPP_
 
 #include <assert.h>
 #include <iostream>
@@ -23,4 +23,4 @@ struct message_t {
 istream& operator>>(istream& is, message_t& msg);
 ostream& operator<<(ostream& os, const message_t& msg);
 
-#endif // BOOST_SIMULATION_MESSAGE_HPP
+#endif // _BOOST_SIMULATION_MESSAGE_HPP_

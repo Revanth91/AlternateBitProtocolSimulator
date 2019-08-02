@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef BOOST_SIMULATION_PDEVS_RECEIVER_HPP
-#define BOOST_SIMULATION_PDEVS_RECEIVER_HPP
+#ifndef _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
+#define _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -40,11 +40,11 @@ class Receiver {
     using defs = receiver_defs; // putting definitions in context
     public:
     //Parameters to be overwriten when instantiating the atomic model
-    TIME preparationTime;
+    TIME PREPARATION_TIME;
     
     // default constructor
     Receiver() noexcept {
-        preparationTime = TIME("00:00:10");
+        PREPARATION_TIME = TIME("00:00:10");
         state.acknowledgement_number = 0;
         state.sending = false;
     }
@@ -95,7 +95,7 @@ class Receiver {
     TIME time_advance() const {  
         TIME next_internal;
         if (state.sending) {
-            next_internal = preparationTime;
+            next_internal = PREPARATION_TIME;
         }
         else {
             next_internal = std::numeric_limits<TIME>::infinity();
@@ -109,4 +109,4 @@ class Receiver {
     }
 };     
 
-#endif // BOOST_SIMULATION_PDEVS_RECEIVER_HPP
+#endif // _BOOST_SIMULATION_PDEVS_RECEIVER_HPP_
