@@ -3,8 +3,8 @@
 * ARSLab - Carleton University
 */
 
-#ifndef _BOOST_SIMULATION_PDEVS_SENDER_HPP_
-#define _BOOST_SIMULATION_PDEVS_SENDER_HPP_
+#ifndef __SENDER_CADMIUM_HPP__
+#define __SENDER_CADMIUM_HPP__
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -93,8 +93,8 @@ class Sender {
                 } 
                 else {
                     state.model_active = false;
-                    state.next_internal = 
-                        std::numeric_limits<TIME>::infinity();
+                    state.next_internal 
+                        = std::numeric_limits<TIME>::infinity();
                 }
             } 
             else {
@@ -113,8 +113,8 @@ class Sender {
 
         // external transition
         void external_transition(
-                TIME e, typename make_message_bags<input_ports>::type mbs
-            ) {
+                TIME e, typename make_message_bags<input_ports>::type mbs  
+        ) {
             if((get_messages<typename defs::controlIn>(mbs).size()+
                     get_messages<typename defs::ackIn>(mbs).size()) > 1) {
                         assert(false && "one message per time uniti");
@@ -141,7 +141,7 @@ class Sender {
             }
             for(const auto &x : get_messages<typename defs::ackIn>(mbs)) {
                 if(state.model_active == true) {
-                    if (state.alt_bit == static_cast <int> (x.value)) {
+                    if (state.alt_bit == static_cast<int>(x.value)) {
                         state.ack = true;
                         state.sending = false;
                         state.next_internal = TIME("00:00:00");
@@ -193,12 +193,13 @@ class Sender {
             return state.next_internal;
         }
         
-        friend std::ostringstream& operator<<(std::ostringstream& os,
-                const typename Sender<TIME>::state_type& i) {
+        friend std::ostringstream& operator<<(
+            std::ostringstream& os,
+            const typename Sender<TIME>::state_type& i) {
                 os << "packet_number: " << i.packet_number << 
                 " & total_packet_number: " << i.total_packet_number; 
                 return os;
         }
-    };     
+};     
 
-#endif // _BOOST_SIMULATION_PDEVS_SENDER_HPP_
+#endif // __SENDER_CADMIUM_HPP_

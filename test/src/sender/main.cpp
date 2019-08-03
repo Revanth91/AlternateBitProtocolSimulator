@@ -22,24 +22,18 @@ using namespace std;
 using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
 
-
 /***** SETING INPUT PORTS FOR COUPLEDs *****/
 struct inp_controll : public cadmium::in_port<message_t> {
-
 };
 struct inp_ack : public cadmium::in_port<message_t> {
-
 };
 
 /***** SETING OUTPUT PORTS FOR COUPLEDs *****/
 struct outp_ack : public cadmium::out_port<message_t> {
-
 };
 struct outp_data : public cadmium::out_port<message_t> {
-
 };
 struct outp_pack : public cadmium::out_port<message_t> {
-
 };
 
 
@@ -92,7 +86,7 @@ int main() {
         cadmium::logger::logger_message_routing,
         cadmium::dynamic::logger::formatter<TIME>,
         oss_sink_provider
-        >;
+    >;
     using global_time = cadmium::logger::logger<
         cadmium::logger::logger_global_time,
         cadmium::dynamic::logger::formatter<TIME>,
@@ -115,39 +109,38 @@ int main() {
     /********************************************/
     /****** APPLICATION GENERATOR *******************/
     /********************************************/
-    string input_data_control = 
-        "../test/data/sender/sender_input_test_control_In.txt";
+    string input_data_control 
+        = "../test/data/sender/sender_input_test_control_In.txt";
     const char * i_input_data_control = input_data_control.c_str();
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> generator_con = 
-        cadmium::dynamic::translate::make_dynamic_atomic_model
-            <ApplicationGen, TIME, const char* >(
-                "generator_con" , std::move(i_input_data_control));
+    std::shared_ptr<cadmium::dynamic::modeling::model> generator_con 
+        = cadmium::dynamic::translate::make_dynamic_atomic_model
+        <ApplicationGen, TIME, const char* >(
+            "generator_con" , std::move(i_input_data_control)
+        );
 
     string input_data_ack = "sender_input_test_ack_In.txt";
     const char * i_input_data_ack = input_data_ack.c_str();
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> generator_ack = 
-        cadmium::dynamic::translate::make_dynamic_atomic_model
-            <ApplicationGen, TIME, const char* >(
-                "generator_ack" , std::move(i_input_data_ack
-        ));
+    std::shared_ptr<cadmium::dynamic::modeling::model> generator_ack 
+        = cadmium::dynamic::translate::make_dynamic_atomic_model
+        <ApplicationGen, TIME, const char* >(
+            "generator_ack" , std::move(i_input_data_ack)
+        );
 
 
     /********************************************/
     /****** SENDER *******************/
     /********************************************/
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> sender1 = 
-        cadmium::dynamic::translate::make_dynamic_atomic_model
-            <Sender, TIME>("sender1");
-
+    std::shared_ptr<cadmium::dynamic::modeling::model> sender1 
+        = cadmium::dynamic::translate::make_dynamic_atomic_model
+        <Sender, TIME>("sender1");
 
     /************************/
     /*******TOP MODEL********/
     /************************/
     cadmium::dynamic::modeling::Ports iports_TOP = {
-
     };
     cadmium::dynamic::modeling::Ports oports_TOP = {
         typeid(outp_data), typeid(outp_pack), typeid(outp_ack)
@@ -156,7 +149,6 @@ int main() {
         generator_con, generator_ack, sender1
     };
     cadmium::dynamic::modeling::EICs eics_TOP = {
-
     };
     cadmium::dynamic::modeling::EOCs eocs_TOP = {
         cadmium::dynamic::translate::make_EOC<
@@ -177,10 +169,10 @@ int main() {
             iestream_input_defs<message_t>::out, sender_defs::ackIn
         >("generator_ack", "sender1")
     };
-    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = 
-        std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
+    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP 
+        = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
             "TOP", submodels_TOP, iports_TOP, oports_TOP, eics_TOP, 
-                eocs_TOP, ics_TOP 
+            eocs_TOP, ics_TOP
         );
 
     ///****************////
