@@ -20,7 +20,7 @@ struct message_t {
     }
 };
 
-istream& operator>>(istream& is, message_t& msg);
-ostream& operator<<(ostream& os, const message_t& msg);
+istream& operator>>(istream& input_stream, message_t& msg);
+ostream& operator<<(ostream& output_stream, const message_t& msg);
 
 #endif // __MESSAGE_HPP__
