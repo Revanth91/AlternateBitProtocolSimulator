@@ -28,15 +28,15 @@ using namespace std;
 
 //Port definition
 struct sender_defs {
-    struct packetSentOut : public out_port<message_t> {
+    struct packet_sent_out : public out_port<message_t> {
     };
-    struct ackReceivedOut : public out_port<message_t> {
+    struct ack_received_out : public out_port<message_t> {
     };
-    struct dataOut : public out_port<message_t> {
+    struct data_out : public out_port<message_t> {
     };
-    struct controlIn : public in_port<message_t> {
+    struct control_in : public in_port<message_t> {
     };
-    struct ackIn : public in_port<message_t> {
+    struct acknowledgement_in : public in_port<message_t> {
     };
 };
 
@@ -71,13 +71,13 @@ class Sender {
         
         // ports definition
         using input_ports = std::tuple<
-            typename defs::controlIn, 
-            typename defs::ackIn
+            typename defs::control_in, 
+            typename defs::acknowledgement_in
         >;
         using output_ports = std::tuple<
-            typename defs::packetSentOut, 
-            typename defs::ackReceivedOut, 
-            typename defs::dataOut
+            typename defs::packet_sent_out, 
+            typename defs::ack_received_out, 
+            typename defs::data_out
         >;
 
         // internal transition
@@ -112,14 +112,14 @@ class Sender {
         }
 
         // external transition
-        void external_transition(
-                TIME e, typename make_message_bags<input_ports>::type mbs  
+        void external_transition(TIME e, 
+                                 typename make_message_bags<input_ports>::type mbs  
         ) {
-            if((get_messages<typename defs::controlIn>(mbs).size()+
-                    get_messages<typename defs::ackIn>(mbs).size()) > 1) {
+            if((get_messages<typename defs::control_in>(mbs).size()+
+                    get_messages<typename defs::acknowledgement_in>(mbs).size()) > 1) {
                         assert(false && "one message per time uniti");
             }
-            for(const auto &x : get_messages<typename defs::controlIn>(mbs)) {
+            for(const auto &x : get_messages<typename defs::control_in>(mbs)) {
                 if(state.model_active == false) {
                     state.total_packet_number = static_cast <int> (x.value);
                     if (state.total_packet_number > 0) {
@@ -139,7 +139,7 @@ class Sender {
                     }
                 }
             }
-            for(const auto &x : get_messages<typename defs::ackIn>(mbs)) {
+            for(const auto &x : get_messages<typename defs::acknowledgement_in>(mbs)) {
                 if(state.model_active == true) {
                     if (state.alt_bit == static_cast<int>(x.value)) {
                         state.ack = true;
@@ -159,7 +159,7 @@ class Sender {
 
         // confluence transition
         void confluence_transition(TIME e, 
-                typename make_message_bags<input_ports>::type mbs
+                                   typename make_message_bags<input_ports>::type mbs
         ) {
             internal_transition();
             external_transition(TIME(), std::move(mbs));
@@ -171,17 +171,17 @@ class Sender {
             message_t out;
             if (state.sending) {
                 out.value = state.packet_number * 10 + state.alt_bit;
-                get_messages<typename defs::dataOut>(bags).push_back(out);
+                get_messages<typename defs::data_out>(bags).push_back(out);
                 out.value = state.packet_number;
                 get_messages<
-                    typename defs::packetSentOut
+                    typename defs::packet_sent_out
                 >(bags).push_back(out);
             }
             else {
                 if (state.ack) {
                     out.value = state.alt_bit;
                     get_messages<
-                        typename defs::ackReceivedOut
+                        typename defs::ack_received_out
                     >(bags).push_back(out);
                 }
             }   
@@ -193,13 +193,12 @@ class Sender {
             return state.next_internal;
         }
         
-        friend std::ostringstream& operator<<(
-            std::ostringstream& os,
-            const typename Sender<TIME>::state_type& i) {
-                os << "packet_number: " << i.packet_number << 
-                " & total_packet_number: " << i.total_packet_number; 
-                return os;
+        friend std::ostringstream& operator<<(std::ostringstream& os,
+                                              const typename Sender<TIME>::state_type& i) {
+            os<<"packet_number: "<<i.packet_number<<" & total_packet_number: "
+                                                  <<i.total_packet_number;
+            return os;
         }
 };     
 
-#endif // __SENDER_CADMIUM_HPP_
+#endif // __SENDER_CADMIUM_HPP__

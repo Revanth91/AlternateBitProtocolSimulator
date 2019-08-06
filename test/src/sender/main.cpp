@@ -36,7 +36,6 @@ struct outp_data : public cadmium::out_port<message_t> {
 struct outp_pack : public cadmium::out_port<message_t> {
 };
 
-
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
@@ -110,32 +109,31 @@ int main() {
     /****** APPLICATION GENERATOR *******************/
     /********************************************/
     string input_data_control 
-        = "../test/data/sender/sender_input_test_control_In.txt";
+        = "../test/data/sender/sender_input_test_control_in.txt";
     const char * i_input_data_control = input_data_control.c_str();
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> generator_con 
+    std::shared_ptr<cadmium::dynamic::modeling::model>generator_con 
         = cadmium::dynamic::translate::make_dynamic_atomic_model
-        <ApplicationGen, TIME, const char* >(
-            "generator_con" , std::move(i_input_data_control)
+          <ApplicationGen, TIME, const char*>(
+          "generator_con", std::move(i_input_data_control)
         );
 
     string input_data_ack = "sender_input_test_ack_In.txt";
     const char * i_input_data_ack = input_data_ack.c_str();
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> generator_ack 
+    std::shared_ptr<cadmium::dynamic::modeling::model>generator_ack 
         = cadmium::dynamic::translate::make_dynamic_atomic_model
-        <ApplicationGen, TIME, const char* >(
-            "generator_ack" , std::move(i_input_data_ack)
+          <ApplicationGen, TIME, const char*>(
+          "generator_ack", std::move(i_input_data_ack)
         );
-
 
     /********************************************/
     /****** SENDER *******************/
     /********************************************/
 
-    std::shared_ptr<cadmium::dynamic::modeling::model> sender1 
+    std::shared_ptr<cadmium::dynamic::modeling::model>sender1 
         = cadmium::dynamic::translate::make_dynamic_atomic_model
-        <Sender, TIME>("sender1");
+          <Sender, TIME>("sender1");
 
     /************************/
     /*******TOP MODEL********/
@@ -152,44 +150,44 @@ int main() {
     };
     cadmium::dynamic::modeling::EOCs eocs_TOP = {
         cadmium::dynamic::translate::make_EOC<
-            sender_defs::packetSentOut, outp_pack
+            sender_defs::packet_sent_out, outp_pack
         >("sender1"),
         cadmium::dynamic::translate::make_EOC<
-        sender_defs::ackReceivedOut, outp_ack
+        sender_defs::ack_received_out, outp_ack
         >("sender1"),
         cadmium::dynamic::translate::make_EOC<
-        sender_defs::dataOut, outp_data
+        sender_defs::data_out, outp_data
         >("sender1")
     };
     cadmium::dynamic::modeling::ICs ics_TOP = {
         cadmium::dynamic::translate::make_IC<
-            iestream_input_defs<message_t>::out, sender_defs::controlIn
+            iestream_input_defs<message_t>::out, sender_defs::control_in
         >("generator_con", "sender1"),
         cadmium::dynamic::translate::make_IC<
-            iestream_input_defs<message_t>::out, sender_defs::ackIn
+            iestream_input_defs<message_t>::out, sender_defs::acknowledgement_in
         >("generator_ack", "sender1")
     };
-    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP 
+    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>>TOP 
         = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
-            "TOP", submodels_TOP, iports_TOP, oports_TOP, eics_TOP, 
-            eocs_TOP, ics_TOP
+          "TOP", submodels_TOP, iports_TOP, oports_TOP, eics_TOP, 
+          eocs_TOP, ics_TOP
         );
 
     ///****************////
     auto elapsed1 = std::chrono::duration_cast<
         std::chrono::duration<double, std::ratio<1>>
     >(hclock::now() - start).count();
-    cout << "Model Created. Elapsed time: " << elapsed1 << "sec" << endl;
-    cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
+    cout<<"Model Created. Elapsed time: "<<elapsed1<<"sec"<<endl;
+    cadmium::dynamic::engine::runner<NDTime, logger_top>r(TOP, {0});
     elapsed1 = std::chrono::duration_cast<
         std::chrono::duration<double, std::ratio<1>>
     >(hclock::now() - start).count();
-    cout << "Runner Created. Elapsed time: " << elapsed1 << "sec" << endl;
-    cout << "Simulation starts" << endl;
+    cout<<"Runner Created. Elapsed time: "<<elapsed1<<"sec"<<endl;
+    cout<<"Simulation starts"<<endl;
     r.run_until(NDTime("04:00:00:000"));
     auto elapsed = std::chrono::duration_cast<
         std::chrono::duration<double, std::ratio<1>>
     >(hclock::now() - start).count();
-    cout << "Simulation took:" << elapsed << "sec" << endl;
+    cout<<"Simulation took:"<<elapsed<<"sec"<<endl;
     return 0;
 }
