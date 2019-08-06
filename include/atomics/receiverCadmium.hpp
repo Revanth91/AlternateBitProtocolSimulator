@@ -66,9 +66,8 @@ class Receiver {
         }
 
         // external transition
-        void external_transition(
-                TIME e, 
-                typename make_message_bags<input_ports>::type mbs) { 
+        void external_transition(TIME e, 
+                                 typename make_message_bags<input_ports>::type mbs) { 
             if (get_messages<typename defs::in>(mbs).size() > 1) {
                 assert(false && "one message per time uniti");    
             } 
@@ -79,9 +78,8 @@ class Receiver {
         }
 
         // confluence transition
-        void confluence_transition(
-                TIME e, 
-                typename make_message_bags<input_ports>::type mbs) {
+        void confluence_transition(TIME e, 
+                                   typename make_message_bags<input_ports>::type mbs) {
             internal_transition();
             external_transition(TIME(), std::move(mbs));
         }
@@ -107,9 +105,8 @@ class Receiver {
             return next_internal;
         }
 
-        friend std::ostringstream& operator<<(
-                std::ostringstream& os, 
-                const typename Receiver<TIME>::state_type& i) {
+        friend std::ostringstream& operator<<(std::ostringstream& os, 
+                                              const typename Receiver<TIME>::state_type& i) {
             os<<"acknowledgement_number: "<<i.acknowledgement_number; 
             return os;
         }

@@ -66,9 +66,8 @@ class Subnet {
         }
 
         // external transition
-        void external_transition(
-                TIME e, 
-                typename make_message_bags<input_ports>::type mbs) { 
+        void external_transition(TIME e, 
+                                 typename make_message_bags<input_ports>::type mbs) { 
             state.index ++;
             if (get_messages<typename defs::in>(mbs).size() > 1) {
                 assert(false && "One message at a time");                
@@ -80,9 +79,8 @@ class Subnet {
         }
 
         // confluence transition
-        void confluence_transition(
-                TIME e, 
-                typename make_message_bags<input_ports>::type mbs) {
+        void confluence_transition(TIME e, 
+                                   typename make_message_bags<input_ports>::type mbs) {
             internal_transition();
             external_transition(TIME(), std::move(mbs));
         }
@@ -115,9 +113,8 @@ class Subnet {
             return next_internal;
         }
 
-        friend std::ostringstream& operator<<(
-                std::ostringstream& os, 
-                const typename Subnet<TIME>::state_type& i) {
+        friend std::ostringstream& operator<<(std::ostringstream& os, 
+                                              const typename Subnet<TIME>::state_type& i) {
             os<<"index: "<<i.index<<" & transmiting: "<<i.transmiting; 
             return os;
         }
