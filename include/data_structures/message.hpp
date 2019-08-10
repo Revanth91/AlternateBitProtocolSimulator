@@ -12,11 +12,11 @@ using namespace std;
 /*******************************************/
 
 struct message_t {
-	float value;
-	message_t() {}
-	message_t(float i_value) : value(i_value) {}
-	void clear() {
-		message_t(); 
+    float value;
+    message_t() {}
+    message_t(float i_value) : value(i_value) {}
+    void clear() {
+        message_t(); 
     }
 };
 
