@@ -138,17 +138,17 @@ int main() {
     /************************/
     /*******TOP MODEL********/
     /************************/
-    cadmium::dynamic::modeling::Ports iports_TOP = {
+    cadmium::dynamic::modeling::Ports in_ports_top = {
     };
-    cadmium::dynamic::modeling::Ports oports_TOP = {
+    cadmium::dynamic::modeling::Ports out_ports_top = {
         typeid(outp_data), typeid(outp_pack), typeid(outp_ack)
     };
-    cadmium::dynamic::modeling::Models submodels_TOP = {
+    cadmium::dynamic::modeling::Models submodels_top = {
         generator_con, generator_ack, sender1
     };
-    cadmium::dynamic::modeling::EICs eics_TOP = {
+    cadmium::dynamic::modeling::EICs eics_top = {
     };
-    cadmium::dynamic::modeling::EOCs eocs_TOP = {
+    cadmium::dynamic::modeling::EOCs eocs_top = {
         cadmium::dynamic::translate::make_EOC<
             sender_defs::packet_sent_out, outp_pack
         >("sender1"),
@@ -159,7 +159,7 @@ int main() {
         sender_defs::data_out, outp_data
         >("sender1")
     };
-    cadmium::dynamic::modeling::ICs ics_TOP = {
+    cadmium::dynamic::modeling::ICs ics_top = {
         cadmium::dynamic::translate::make_IC<
             iestream_input_defs<message_t>::out, sender_defs::control_in
         >("generator_con", "sender1"),
@@ -169,8 +169,8 @@ int main() {
     };
     std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>>TOP 
         = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
-          "TOP", submodels_TOP, iports_TOP, oports_TOP, eics_TOP, 
-          eocs_TOP, ics_TOP
+          "TOP", submodels_top, in_ports_top, out_ports_top, eics_top, 
+          eocs_top, ics_top
         );
 
     ///****************////

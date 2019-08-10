@@ -174,25 +174,25 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> ABPSimulator = std::m
 /************************/
 /*******TOP MODEL********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_TOP = {};
-cadmium::dynamic::modeling::Ports oports_TOP = {typeid(outp_pack),typeid(outp_ack)};
-cadmium::dynamic::modeling::Models submodels_TOP = {generator_con, ABPSimulator};
-cadmium::dynamic::modeling::EICs eics_TOP = {};
-cadmium::dynamic::modeling::EOCs eocs_TOP = {
+cadmium::dynamic::modeling::Ports in_ports_top = {};
+cadmium::dynamic::modeling::Ports out_ports_top = {typeid(outp_pack),typeid(outp_ack)};
+cadmium::dynamic::modeling::Models submodels_top = {generator_con, ABPSimulator};
+cadmium::dynamic::modeling::EICs eics_top = {};
+cadmium::dynamic::modeling::EOCs eocs_top = {
   cadmium::dynamic::translate::make_EOC<outp_pack,outp_pack>("ABPSimulator"),
 cadmium::dynamic::translate::make_EOC<outp_pack,outp_ack>("ABPSimulator")
 };
-cadmium::dynamic::modeling::ICs ics_TOP = {
+cadmium::dynamic::modeling::ICs ics_top = {
   cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,inp_control>("generator_con","ABPSimulator")
 };
 std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
  "TOP", 
- submodels_TOP, 
- iports_TOP, 
- oports_TOP, 
- eics_TOP, 
- eocs_TOP, 
- ics_TOP 
+ submodels_top, 
+ in_ports_top, 
+ out_ports_top, 
+ eics_top, 
+ eocs_top, 
+ ics_top 
   );
 
 ///****************////
