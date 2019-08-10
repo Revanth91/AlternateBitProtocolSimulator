@@ -105,10 +105,10 @@ class Receiver {
             return next_internal;
         }
 
-        friend std::ostringstream& operator<<(std::ostringstream& os, 
+        friend std::ostringstream& operator<<(std::ostringstream& output_stream, 
                                               const typename Receiver<TIME>::state_type& i) {
-            os<<"acknowledgement_number: "<<i.acknowledgement_number; 
-            return os;
+            output_stream<<"acknowledgement_number: "<<i.acknowledgement_number; 
+            return output_stream;
         }
 };     
 

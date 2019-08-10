@@ -113,10 +113,10 @@ class Subnet {
             return next_internal;
         }
 
-        friend std::ostringstream& operator<<(std::ostringstream& os, 
+        friend std::ostringstream& operator<<(std::ostringstream& output_stream, 
                                               const typename Subnet<TIME>::state_type& i) {
-            os<<"index: "<<i.index<<" & transmiting: "<<i.transmiting; 
-            return os;
+            output_stream<<"index: "<<i.index<<" & transmiting: "<<i.transmiting; 
+            return output_stream;
         }
 };    
 
