@@ -193,11 +193,11 @@ class Sender {
             return state.next_internal;
         }
         
-        friend std::ostringstream& operator<<(std::ostringstream& os,
+        friend std::ostringstream& operator<<(std::ostringstream& output_stream,
                                               const typename Sender<TIME>::state_type& i) {
-            os<<"packet_number: "<<i.packet_number<<" & total_packet_number: "
+            output_stream<<"packet_number: "<<i.packet_number<<" & total_packet_number: "
                                                   <<i.total_packet_number;
-            return os;
+            return output_stream;
         }
 };     
 
