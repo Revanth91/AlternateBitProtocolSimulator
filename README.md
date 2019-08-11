@@ -1,5 +1,15 @@
 # ALTERNATE BIT PROTOCOL
 
+### Table of contents
+
+- [Introduction](#Introduction)
+- [File Organization](#File-Organization)
+- [Instructions](#Instructions)
+	- [Installing dependencies](#Installing-dependencies)
+	- [Run the simulator](#Run-the-simulator)
+	- [Run the unit tests](#Run-the-unit-tests)
+- [Contributions](#Contributions)
+
 ## Introduction 
 
 Alternate Bit Protocol (ABP) simulator is a communication protocol to ensure reliable transmission through an unreliable network. It consists of three components: sender, network (decomposed further into two subnets) and receiver. The sender sends a packet and waits for an acknowledgement. If the acknowledgement doesn't arrive within a predefined time, the sender re-sends this packet until it receives an expected acknowledgement and then sends the next packet. In order to distinguish two consecutive packets, the sender adds an additional bit on each packet (called alternating bit because the sender uses 0 and 1 alternatively). 
