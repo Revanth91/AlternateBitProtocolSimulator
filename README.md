@@ -2,6 +2,12 @@
 
 ## Introduction 
 
+Alternate Bit Protocol (ABP) simulator is a communication protocol to ensure reliable transmission through an unreliable network. It consists of three components: sender, network (decomposed further into two subnets) and receiver. The sender sends a packet and waits for an acknowledgement. If the acknowledgement doesn't arrive within a predefined time, the sender re-sends this packet until it receives an expected acknowledgement and then sends the next packet. In order to distinguish two consecutive packets, the sender adds an additional bit on each packet (called alternating bit because the sender uses 0 and 1 alternatively). 
+
+The behavior of receiver is to receive the data and send back an acknowledgement extracted from the received data after a time period. The subnets just pass the packets after a time delay. However, in order to simulate the unreliability of the network, only 95% of the packets will be passed in each of the subnet, i.e. 5% of the data will be lost through the subnet.
+
+This ABP simulator is implemented in Cadmium. The behaviour and specification of the simulator is explained in detail in the alternatebitprot.pdf found in [documentation](https://github.com/Revanth91/AlternateBitProtocolSimulator/tree/master/doc) section. In this project, we focus on reviewing the code and following the standard coding conventions, modifying documentation as per proposed coding standard and improving the performance of the simulator.
+
 ## File Organization
 
 ### data [This folder contains the input and output files for the simulator]
