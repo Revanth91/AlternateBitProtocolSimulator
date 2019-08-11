@@ -110,3 +110,8 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 2. To run subnet and receiver tests, the steps are analogous to step 1 of this [section](#Run-the-unit-tests).
 
 ## Contributions 
+
+### Organization 
+Our sincere thanks to [Carleton University](https://carleton.ca/) and Dr. [Cristina Ruiz Martin](https://github.com/cruizm) for providing an opportunity to work on this project. 
+### Authors
+This project was originally developed by Dr. [Cristina Ruiz Martin](https://github.com/cruizm) and it has been modified by [Revanth Sridhar](https://github.com/Revanth91), [Manoj Goli](https://github.com/manoj-goli).
