@@ -101,7 +101,7 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 		 Example: cd ../../AlternateBitProtocol
 3. To compile the project, type in the terminal
 		 `make clean; make all`
-4. To run the simulation, go the folder with executable files (i.e., bin folder). To do so, type in the terminal the path to this folder.
+4. To run the simulation, go the folder with executable files (i.e., bin folder) which was generated from the previous step. To do so, type in the terminal the path to this folder.
 		 Example: cd bin
 5. In the terminal type "./NAME_OF_THE_COMPILED_FILE NAME_OF_THE_INPUT_FILE". For this test you need to type:
 		 `./ABP ../data/input/input_abp_1.txt`
