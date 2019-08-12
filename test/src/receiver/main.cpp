@@ -14,12 +14,12 @@
 #include <cadmium/logger/common_loggers.hpp>
 
 
-#include "../../../lib/vendor/NDTime.hpp"
+#include "../../../lib/vendor/ndtime.hpp"
 #include "../../../lib/vendor/iestream.hpp"
 
 #include "../../../include/data_structures/message.hpp"
 
-#include "../../../include/atomics/receiverCadmium.hpp"
+#include "../../../include/atomics/receivercadmium.hpp"
 
 using namespace std;
 
@@ -28,20 +28,20 @@ using TIME = NDTime;
 
 
 /***** SETING INPUT PORTS FOR COUPLEDs *****/
-struct inp : public cadmium::in_port<Message_t>{};
+struct inp : public cadmium::in_port<message_t>{};
 
 /***** SETING OUTPUT PORTS FOR COUPLEDs *****/
-struct outp : public cadmium::out_port<Message_t>{};
+struct outp : public cadmium::out_port<message_t>{};
 
 
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T> {
+class ApplicationGen : public iestream_input<message_t,T> {
 public:
   ApplicationGen() = default;
-  ApplicationGen(const char* file_path) : iestream_input<Message_t,T>(file_path) {}
+  ApplicationGen(const char* file_path) : iestream_input<message_t,T>(file_path) {}
 };
 
 
@@ -91,24 +91,24 @@ std::shared_ptr<cadmium::dynamic::modeling::model> receiver1 = cadmium::dynamic:
 /************************/
 /*******TOP MODEL********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_TOP = {};
-cadmium::dynamic::modeling::Ports oports_TOP = {typeid(outp)};
-cadmium::dynamic::modeling::Models submodels_TOP = {generator, receiver1};
-cadmium::dynamic::modeling::EICs eics_TOP = {};
-cadmium::dynamic::modeling::EOCs eocs_TOP = {
-  cadmium::dynamic::translate::make_EOC<Receiver_defs::out,outp>("receiver1")
+cadmium::dynamic::modeling::Ports in_ports_top = {};
+cadmium::dynamic::modeling::Ports out_ports_top = {typeid(outp)};
+cadmium::dynamic::modeling::Models submodels_top = {generator, receiver1};
+cadmium::dynamic::modeling::EICs eics_top = {};
+cadmium::dynamic::modeling::EOCs eocs_top = {
+  cadmium::dynamic::translate::make_EOC<receiver_defs::out,outp>("receiver1")
 };
-cadmium::dynamic::modeling::ICs ics_TOP = {
-  cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,Receiver_defs::in>("generator","receiver1")
+cadmium::dynamic::modeling::ICs ics_top = {
+  cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,receiver_defs::in>("generator","receiver1")
 };
 std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
  "TOP", 
- submodels_TOP, 
- iports_TOP, 
- oports_TOP, 
- eics_TOP, 
- eocs_TOP, 
- ics_TOP 
+ submodels_top, 
+ in_ports_top, 
+ out_ports_top, 
+ eics_top, 
+ eocs_top, 
+ ics_top 
   );
 
 ///****************////

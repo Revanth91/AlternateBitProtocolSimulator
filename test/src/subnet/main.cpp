@@ -13,43 +13,36 @@
 #include <cadmium/logger/tuple_to_ostream.hpp>
 #include <cadmium/logger/common_loggers.hpp>
 
-
-#include "../../../lib/vendor/NDTime.hpp"
+#include "../../../lib/vendor/ndtime.hpp"
 #include "../../../lib/vendor/iestream.hpp"
-
 #include "../../../include/data_structures/message.hpp"
-
-#include "../../../include/atomics/subnetCadmium.hpp"
+#include "../../../include/atomics/subnetcadmium.hpp"
 
 using namespace std;
-
-using hclock=chrono::high_resolution_clock;
+using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
 
-
 /***** SETING INPUT PORTS FOR COUPLEDs *****/
-struct inp_in : public cadmium::in_port<Message_t>{};
+struct inp_in : public cadmium::in_port<message_t> {};
 
 /***** SETING OUTPUT PORTS FOR COUPLEDs *****/
-struct outp_out: public cadmium::out_port<Message_t>{};
+struct outp_out : public cadmium::out_port<message_t> {};
 
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T> {
-public:
-  ApplicationGen() = default;
-  ApplicationGen(const char* file_path) : iestream_input<Message_t,T>(file_path) {}
+class ApplicationGen : public iestream_input<message_t,T> {
+    public:
+    ApplicationGen() = default;
+    ApplicationGen(const char* file_path):iestream_input<message_t,T>(file_path) {}
 };
 
-
-int main(){
-
-  auto start = hclock::now(); //to measure simulation execution time
+int main() {
+    auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-  static std::ofstream out_data("../test/data/subnet/subnet_test_output.txt");
+    static std::ofstream out_data("../test/data/subnet/subnet_test_output.txt");
     struct oss_sink_provider{
         static std::ostream& sink(){          
             return out_data;
@@ -64,13 +57,9 @@ using routing=cadmium::logger::logger<cadmium::logger::logger_message_routing, c
 using global_time=cadmium::logger::logger<cadmium::logger::logger_global_time, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
 using local_time=cadmium::logger::logger<cadmium::logger::logger_local_time, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
 using log_all=cadmium::logger::multilogger<info, debug, state, log_messages, routing, global_time, local_time>;
-
 using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 
-
 /*******************************************/
-
-
 
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
@@ -80,35 +69,36 @@ const char * i_input_data = input_data.c_str();
 
 std::shared_ptr<cadmium::dynamic::modeling::model> generator = cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen, TIME, const char* >("generator" , std::move(i_input_data));
 
-
 /********************************************/
 /****** SUBNET *******************/
 /********************************************/
 
 std::shared_ptr<cadmium::dynamic::modeling::model> subnet1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Subnet, TIME>("subnet1");
 
-
 /************************/
 /*******TOP MODEL********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_TOP = {};
-cadmium::dynamic::modeling::Ports oports_TOP = {typeid(outp_out)};
-cadmium::dynamic::modeling::Models submodels_TOP = {generator, subnet1};
-cadmium::dynamic::modeling::EICs eics_TOP = {};
-cadmium::dynamic::modeling::EOCs eocs_TOP = {
-  cadmium::dynamic::translate::make_EOC<Subnet_defs::out,outp_out>("subnet1")
+cadmium::dynamic::modeling::Ports in_ports_top = {};
+cadmium::dynamic::modeling::Ports out_ports_top
+ = {
+    typeid(outp_out)
 };
-cadmium::dynamic::modeling::ICs ics_TOP = {
-  cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,Subnet_defs::in>("generator","subnet1")
+cadmium::dynamic::modeling::Models submodels_top = {generator, subnet1};
+cadmium::dynamic::modeling::EICs eics_top = {};
+cadmium::dynamic::modeling::EOCs eocs_top = {
+    cadmium::dynamic::translate::make_EOC<subnet_defs::out,outp_out>("subnet1")
+};
+cadmium::dynamic::modeling::ICs ics_top = {
+    cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,subnet_defs::in>("generator","subnet1")
 };
 std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
  "TOP", 
- submodels_TOP, 
- iports_TOP, 
- oports_TOP, 
- eics_TOP, 
- eocs_TOP, 
- ics_TOP 
+ submodels_top, 
+ in_ports_top, 
+ out_ports_top, 
+ eics_top, 
+ eocs_top, 
+ ics_top 
   );
 
 ///****************////

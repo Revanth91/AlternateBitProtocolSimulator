@@ -1,5 +1,5 @@
-#ifndef BOOST_SIMULATION_MESSAGE_HPP
-#define BOOST_SIMULATION_MESSAGE_HPP
+#ifndef __MESSAGE_HPP__
+#define __MESSAGE_HPP__
 
 #include <assert.h>
 #include <iostream>
@@ -8,24 +8,19 @@
 using namespace std;
 
 /*******************************************/
-/**************** Message_t ****************/
+/**************** message_t ****************/
 /*******************************************/
-struct Message_t{
 
-  Message_t(){}
-  Message_t(float i_value)
-   :value(i_value){}
-
-  	float   value;
-
-  void clear() {
-   Message_t(); 
-  }
+struct message_t {
+    float value;
+    message_t() {}
+    message_t(float i_value) : value(i_value) {}
+    void clear() {
+        message_t(); 
+    }
 };
 
-istream& operator>> (istream& is, Message_t& msg);
+istream& operator>>(istream& input_stream, message_t& msg);
+ostream& operator<<(ostream& output_stream, const message_t& msg);
 
-ostream& operator<<(ostream& os, const Message_t& msg);
-
-
-#endif // BOOST_SIMULATION_MESSAGE_HPP
+#endif // __MESSAGE_HPP__
