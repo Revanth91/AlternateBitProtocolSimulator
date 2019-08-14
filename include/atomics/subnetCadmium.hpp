@@ -127,7 +127,7 @@ class Subnet {
             }               
         }
 
-         /** 
+        /** 
         * confluence transition function is used to execute internal_transition
         * function (takes no arguements) and then external_transition function
         * (take two arguements e and mbs).
