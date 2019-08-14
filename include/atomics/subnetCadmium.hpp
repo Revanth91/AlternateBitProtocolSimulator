@@ -1,6 +1,21 @@
+/** \brief subnet_cadmium header file implements class Subnet
+*
+* The role of the subnet component is to just receive and send the packets
+* after a specific delay. Only 95% of the packets will be send through 
+* the subnet and the remain 5% will be lost through the subnet. This is 
+* introduced to have unreliability in the network. 
+*
+* Whenever the subnet receives a packet from the sender, they
+* will be in active phase and they will send a acknowledgement or packet
+* with a probability of 95% after a specific time. Once the 
+* acknowledgement or packet are sent, they will go to passive phase (default).
+*
+*/
+
 /**
-* Cristina Ruiz Martin
-* ARSLab - Carleton University
+* Organization    : ARSLab - Carleton University
+* Original author : Cristina Ruiz Martin
+* Modified by     : Revanth Sridhar and Manoj Goli
 *
 */
 
