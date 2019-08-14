@@ -14,7 +14,6 @@
 * Organization    : ARSLab - Carleton University
 * Original author : Cristina Ruiz Martin
 * Modified by     : Revanth Sridhar and Manoj Goli
-*
 */
 
 #ifndef __RECEIVER_CADMIUM_HPP__
@@ -58,7 +57,7 @@ template<typename TIME>
 class Receiver {
 
     /**
-    * putting definitions in context. 
+    * Putting definitions in context. 
     */
     using defs = receiver_defs; 
     public:
@@ -75,8 +74,8 @@ class Receiver {
         
         /**
         * Receiver() is a default constructor to this class. 
-        * It is used initialize recevier components sending status to false, 
-        * acknowledgement_number to 0 and PREPARATION_TIME to 00:00:10
+        * It is to used initialize recevier components sending status to false, 
+        * acknowledgement_number to 0 and PREPARATION_TIME to 00:00:10.
         */
         Receiver() noexcept {
             PREPARATION_TIME = TIME("00:00:10");
@@ -108,7 +107,7 @@ class Receiver {
 
         /**
         * internal transition function sets the state of 
-        * sending variable to false.
+        * sending variable to false (i.e., passive).
         */
         void internal_transition() {
             state.sending = false; 
@@ -116,11 +115,12 @@ class Receiver {
  
         /**
         * external transition function  calculates the size of messages. If 
-        * size is greater than 1, it asserts as one message per unit time 
-        * and then provides the acknowledgement number. 
+        * size is greater than 1, it asserts with an output as one message 
+        * per unit time. If the condition is false,it provides the 
+        * acknowledgement number based on the message. 
         * It also sets the state sending variable to true i.e., active.
-        * @param e is the first arguement
-        * @param mbs is the second arguement 
+        * @param e is the first arguement.
+        * @param mbs is the second arguement.
         */
         void external_transition(TIME e, 
                                  typename make_message_bags<input_ports>::type mbs) { 
@@ -137,8 +137,8 @@ class Receiver {
         * confluence transition function is used to execute internal_transition
         * function (takes no arguements) and then external_transition function
         * (take two arguements e and mbs).
-        * @param e is the first arguement
-        * @param mbs is the second arguement
+        * @param e is the first arguement.
+        * @param mbs is the second arguement.
         */
         void confluence_transition(TIME e, 
                                    typename make_message_bags<input_ports>::type mbs) {
@@ -150,7 +150,7 @@ class Receiver {
         * output function is used to calculate the value of acknowledgement. 
         * It is obtained by performing modulo operation on acknowledgement_number. 
         * It sends the results via the output ports.
-        * @return returns bags
+        * @return returns bags.
         */
         typename make_message_bags<output_ports>::type output() const {
             typename make_message_bags<output_ports>::type bags;
@@ -165,7 +165,7 @@ class Receiver {
         * checking whether the state sending is true/false (i.e.,active/passive).
         * if it is true, then preparation time is set to next_internal. If the 
         * condition is false, then next_internal is set to infinity.
-        * @return returns next_internal  
+        * @return returns next_internal. 
         */
         TIME time_advance() const {  
             TIME next_internal;
@@ -180,9 +180,9 @@ class Receiver {
 
         /**
         * friend function is used to provide the acknowledgement number. 
-        * @param output_stream
-        * @param i
-        * @return returns output_stream
+        * @param output_stream.
+        * @param i.
+        * @return returns output_stream.
         */    
         friend std::ostringstream& operator<<(std::ostringstream& output_stream, 
                                               const typename Receiver<TIME>::state_type& i) {
