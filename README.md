@@ -89,9 +89,10 @@ Below are the instructions to install dependencies on **Windows operating system
 2. Cadmium dependencies installations: 
 	1. Open the Cygwin terminal in the location where you have downloaded the setup (.exe) file for cygwin. 
 	2. Type `./setup-x86_64.exe -q -P libboost-devel` or `apt-cyg install libboost-devel`. This will install boost library.
-	3. Select a folder to download the Cadmium and DESTimes files for the project. 
-	4. Open the Cygwin terminal inside this folder location and type `git clone https://github.com/SimulationEverywhere/cadmium` to download the Cadmium dependencies.  
-	5. Type `git clone https://github.com/Laouen/DESTimes.git` to download the DESTimes dependencies. 
+	3. As a new user when you clone/download the repository, you will find that the cadmium and DESTimes folders are empty because they have been used as sub modules in the project.
+	4. Git expects users to explicitly download the contents of the submodule. hence use `git clone --recursive <project URL>` to clone/download the submodules along with the project. 
+ 
+Alternatively, if you want to clone/download the cadmium and DESTimes in a different location, you may follow the instructions available in the [documentation](https://github.com/Revanth91/AlternateBitProtocolSimulator/tree/master/doc) section. .
 
 For **Linux operating system**, there is a seperate set of instructions available in the [documentation](https://github.com/Revanth91/AlternateBitProtocolSimulator/tree/master/doc) section.
 
