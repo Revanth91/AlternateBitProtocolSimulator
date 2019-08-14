@@ -42,9 +42,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 ### lib [This folder contains the third party library files]
 1. cadmium [This folder contains the cadmium library files]
 2. DESTimes [This folder contains the DESTimes library files]
-3. vendor [This folder contains vendor header files]
-	- iestream.hpp
-	- NDTime.hpp
+3. iestream.hpp
 	
 ### src [This folder contains the source files used for the simualator] 
 1. data_structures [This folder contains the source files from data_structures]
