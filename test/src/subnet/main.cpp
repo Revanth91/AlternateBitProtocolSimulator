@@ -16,7 +16,7 @@
 #include "../../../lib/vendor/ndtime.hpp"
 #include "../../../lib/vendor/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/subnetcadmium.hpp"
+#include "../../../include/atomics/subnet_cadmium.hpp"
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
