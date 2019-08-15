@@ -27,6 +27,10 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/sender_cadmium.hpp"
 
+#define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
+#define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_input_test_control_in.txt"
+#define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_input_test_ack_in.txt"
+
 using namespace std;
 using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
@@ -84,7 +88,7 @@ int main() {
      * file as indicated in the out_data.
      */
     static std::ofstream out_data(
-        "../test/data/sender/sender_test_output.txt"
+        SENDER_OUTPUT_FILEPATH
     );
 
     /**
@@ -153,7 +157,7 @@ int main() {
      * execut for number of input times 
      */
     string input_data_control 
-        = "../test/data/sender/sender_input_test_control_in.txt";
+        = SENDER_CONTROL_FILEPATH;
     const char * i_input_data_control = input_data_control.c_str();
 
     /**
@@ -172,7 +176,7 @@ int main() {
      * runs the execution for number of i_input_data_ack times
      */
 
-    string input_data_ack = "sender_input_test_ack_in.txt";
+    string input_data_ack = SENDER_ACKNOWLEDGE_FILEPATH;
     const char * i_input_data_ack = input_data_ack.c_str();
 
     /**

@@ -18,6 +18,9 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/subnet_cadmium.hpp"
 
+#define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_input_test.txt"
+#define SUBNET_OUTPUT_FILEPATH "../test/data/subnet/subnet_test_output.txt"
+
 using namespace std;
 using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
@@ -42,7 +45,7 @@ int main() {
     auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-    static std::ofstream out_data("../test/data/subnet/subnet_test_output.txt");
+    static std::ofstream out_data(SUBNET_OUTPUT_FILEPATH);
     struct oss_sink_provider{
         static std::ostream& sink(){          
             return out_data;
@@ -64,7 +67,7 @@ using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
-string input_data = "../test/data/subnet/subnet_input_test.txt";
+string input_data = SUBNET_INPUT_FILEPATH;
 const char * i_input_data = input_data.c_str();
 
 std::shared_ptr<cadmium::dynamic::modeling::model> generator = cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen, TIME, const char* >("generator" , std::move(i_input_data));

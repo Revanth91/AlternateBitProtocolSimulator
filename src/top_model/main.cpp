@@ -23,6 +23,8 @@
 #include "../../include/atomics/receiver_cadmium.hpp"
 #include "../../include/atomics/subnet_cadmium.hpp"
 
+#define MAIN_OUTPUT_FILEPATH "../data/output/abp_output.txt"
+
 
 using namespace std;
 
@@ -63,7 +65,7 @@ int main(int argc, char ** argv) {
   auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-  static std::ofstream out_data("../data/output/abp_output.txt");
+  static std::ofstream out_data(MAIN_OUTPUT_FILEPATH);
     struct oss_sink_provider{
         static std::ostream& sink(){          
             return out_data;
