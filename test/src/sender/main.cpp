@@ -168,11 +168,11 @@ int main() {
         );
 
     /**
-     * This will get sender_input_test_ack_In file for execution and
+     * This will get sender_input_test_ack_in file for execution and
      * runs the execution for number of i_input_data_ack times
      */
 
-    string input_data_ack = "sender_input_test_ack_In.txt";
+    string input_data_ack = "sender_input_test_ack_in.txt";
     const char * i_input_data_ack = input_data_ack.c_str();
 
     /**
