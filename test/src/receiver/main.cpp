@@ -13,13 +13,11 @@
 #include <cadmium/logger/tuple_to_ostream.hpp>
 #include <cadmium/logger/common_loggers.hpp>
 
-
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
-
 #include "../../../include/data_structures/message.hpp"
-
 #include "../../../include/atomics/receivercadmium.hpp"
+#include "../../../transform.cpp"
 
 using namespace std;
 
@@ -125,5 +123,12 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     r.run_until(NDTime("04:00:00:000"));
     auto elapsed = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << elapsed << "sec" << endl;
+
+    FILE *input;
+    FILE *output;
+    input = fopen("../test/data/receiver/receiver_test_output.txt","r");
+    output = fopen("../test/data/receiver/receiver_test_output.csv","w");
+    filter(input,output);
+    
     return 0;
 }
