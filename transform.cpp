@@ -1,11 +1,10 @@
 #include<string.h>
 #include<stdio.h>
 
-
-
-//structure declaration: As we can't pass arrays as function arguments we are wrapping into a structure to make single object
+//structure declaration: As we can't pass arrays as function arguments 
+//we are wrapping into a structure to make single object
 struct lineWrap{
-char line[1000];
+	char line[1000];
 };
 
 //To read each line from a file fp
@@ -19,17 +18,15 @@ struct lineWrap line2;
 
 while( (ch = getc(fp))!=EOF && ch!='\n' ){
     line[counter++] = ch;
-
 }
 
 line[counter] = '\0';
 strcpy(line2.line,line);
-//printf("%s\n",line2.line);
 return line2;
 
 }
-//isLine function tells us the type of the line ie time or message
-// if line is Time returns True else False
+//isLine function tells us the type of the line i.e time or message
+// if line is Time, returns True else False
 int isLine(struct lineWrap line){
     if (strlen(line.line) == 12
         && isdigit(line.line[0])
@@ -48,14 +45,11 @@ int isLine(struct lineWrap line){
     else
         return 0;
 }
-
 				
 void filter(FILE *input, FILE *output){
 	
 	fpos_t line_pos;
 	fpos_t temp_pos;
-
-
 
 struct lineWrap l;
 struct lineWrap l2;
@@ -63,15 +57,11 @@ FILE *fp;
 FILE *out;
 fp=input;
 out=output;
-//out = fopen("../data/output/output.csv","w"); 
 char ch;
 char *str;
 int counter = 0;
-//fp = fopen("../data/output/abp_output.txt","r");
-
 
 fprintf(out,"time,value,port,component\n");
-
 
 char time[13];
 char text1[20];
@@ -152,7 +142,6 @@ while(!feof(fp)){
 										text2[counter] = '\0';
 										i--;
 										if(text2[0]!='\0'&& text2[0]>9){
-												//fp = fopen ("../data/output/abp_outputm.txt","w");
 												fprintf(out,"%s,%s,%s,%s\n",time,text2,text1,text3);
 										}
 
@@ -168,7 +157,7 @@ while(!feof(fp)){
 										break;
 
 								default:
-										printf("%c",l.line[i]); //error if printed anything
+										printf("%c",l.line[i]); //error if prints any other
 										break;
 								}
 								if (flag==1){
@@ -181,5 +170,3 @@ while(!feof(fp)){
 
 fclose(out);
 }
-
-
