@@ -24,6 +24,7 @@
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/sendercadmium.hpp"
+#include "../../../transform.cpp"
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
@@ -196,5 +197,12 @@ int main() {
         std::chrono::duration<double, std::ratio<1>>
     >(hclock::now() - start).count();
     cout<<"Simulation took:"<<elapsed<<"sec"<<endl;
+
+    FILE *input;
+    FILE *output;
+    input = fopen("../test/data/sender/sender_test_output.txt","r");
+    output = fopen("../test/data/sender/sender_test_output.csv","w");
+    filter(input,output);
+
     return 0;
 }
