@@ -215,7 +215,7 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     FILE *input;
     FILE *output;
     input = fopen("../data/output/abp_output.txt","r");
-    output = fopen("../data/output/abp_output.csv","w");
+    output = fopen("../data/output/abp_processed_output.csv","w");
     filter(input,output);
     
     return 0;

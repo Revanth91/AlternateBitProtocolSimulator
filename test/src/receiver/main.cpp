@@ -127,7 +127,7 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     FILE *input;
     FILE *output;
     input = fopen("../test/data/receiver/receiver_test_output.txt","r");
-    output = fopen("../test/data/receiver/receiver_test_output.csv","w");
+    output = fopen("../test/data/receiver/receiver_test_processed_output.csv","w");
     filter(input,output);
     
     return 0;
