@@ -97,9 +97,9 @@ void filter(FILE *input, FILE *output) {
 	char *str;
 	int counter = 0; /**< counter variable */
 	char time[13]; /**< variable to strore time details */
-	char text1[20]; /**< variable to store port details*/
-	char text2[20]; /**< variable to store value details */
-	char text3[20]; /**< variable to store component details*/
+	char port[20]; /**< variable to store port details*/
+	char value[20]; /**< variable to store value details */
+	char component[20]; /**< variable to store component details*/
 	int flag; /**< flag variable */
 
 	/** this is the header data printed in the output file 	*/
@@ -141,11 +141,11 @@ void filter(FILE *input, FILE *output) {
 			* output file
 			*/
 			for (i=0;counter!=strlen(l.line);i++) {
-				text3[i] = l.line[counter++];
+				component[i] = l.line[counter++];
 			}
 			
 			/** null character is added to the end of the captured string */
-			text3[i]='\0';
+			component[i]='\0';
 			int colon_counter = 0;
 				
 			for(int i = 0;i<strlen(l.line);i++) {
@@ -180,12 +180,12 @@ void filter(FILE *input, FILE *output) {
 							counter = 0;
 							int j = 0;
 							while(l.line[i]!=':') {
-								text1[counter] = l.line[i];
+								port[counter] = l.line[i];
 								counter++;
 								i++;
 							}
 							i--;
-							text1[counter]='\0';
+							port[counter]='\0';
 							break;
 						}
 						else if (colon_counter==3) {
@@ -203,12 +203,12 @@ void filter(FILE *input, FILE *output) {
 						i++;
 						counter=0;
 						while(l.line[i]!='}') {
-							text2[counter++] = l.line[i++];
+							value[counter++] = l.line[i++];
 						}
-						text2[counter] = '\0';
+						value[counter] = '\0';
 						i--;	
-						if(text2[0]!='\0'&& text2[0]>9) {
-							fprintf(out,"%s,%s,%s,%s\n",time,text2,text1,text3);
+						if(value[0]!='\0'&& value[0]>9) {
+							fprintf(out,"%s,%s,%s,%s\n",time,value,port,component);
 						}
 						break;
 
