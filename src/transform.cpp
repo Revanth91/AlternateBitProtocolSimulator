@@ -1,6 +1,6 @@
 /** \brief filter function helps in formatting the output.
 * This function takes the unformatted output files from the simulator as 
-* a input and generates formatted output for the ABP simulator and 
+* the input and generates formatted output for the ABP simulator and 
 * all the unit tests (sender, subnet, receiver).
 */
 
@@ -42,8 +42,8 @@ struct line_wrap read_line(FILE *fp) {
 	}
 
 	/** 
-	* If  there is no further lines to read, then line[counter] is set 
-	* to null. 
+	* If  there is no further string to read, then '\0' will be added as to say
+	* its the end of that particular sub-string. 
 	*/
 	line[counter] = '\0';
 	
@@ -55,10 +55,10 @@ struct line_wrap read_line(FILE *fp) {
 }
 
 /** 
-* isLine function tells us the type of the line i.e time or message
+* istime function tells us the type of the line i.e time or message
 * if the line is Time (example, 00:00:20:000), returns True else False
 */
-int isLine(struct line_wrap line) {
+int istime(struct line_wrap line) {
     if (strlen(line.line) == 12
         && isdigit(line.line[0])
         && isdigit(line.line[1])
@@ -89,10 +89,10 @@ void filter(FILE *input, FILE *output) {
 	fpos_t temp_pos; 
 	struct line_wrap l; 
 	struct line_wrap l2; 
-	FILE *fp; /**< used to store input file name */
-	FILE *out; /**< used to store the output file name */
-	fp=input; /**<  */
-	out=output; /**<  */
+	FILE *fp; /**< intialize pointer variable for input file */
+	FILE *out; /**< intialize pointer variable for output file  */
+	fp=input; /**< used to store input file   */
+	out=output; /**< used to store the output file  */
 	char ch; 
 	char *str;
 	int counter = 0; /**< counter variable */
@@ -105,20 +105,23 @@ void filter(FILE *input, FILE *output) {
 	/** this is the header data printed in the output file 	*/
 	fprintf(out,"time,value,port,component\n");
 	
-	/** l stores each line from the input file */
+	/** uses the structure read_line and stores the content in l*/
 	l = read_line(fp);
 	
-	/** the loop is executed until the end of file is true */
+	/** 
+	* the loop is executed until the end of file is true using the 
+	* pre-defined function feof in C language
+	*/
 	while (!feof(fp)) {
 		
 		/**
-		* loop is executed based on the return value from Isline function. 
-		* If return value from isLine function is 1 (i.e., true), then we 
+		* loop is executed based on the return value from istime function. 
+		* If return value from istime function is 1 (i.e., true), then we 
 		* copy the time into time variable. 
-		* If the return value from isLine function is 0 (i.e., false), then 
+		* If the return value from istime function is 0 (i.e., false), then 
 		* loop goes to the else condition. 
 		*/
-		if (isLine(l)) {
+		if (istime(l)) {
 			strcpy(time,l.line);
 			l = read_line(fp);
 		}
@@ -151,9 +154,9 @@ void filter(FILE *input, FILE *output) {
 			for(int i = 0;i<strlen(l.line);i++) {
 				
 				/**
-				* switch case allows to perform different operations based on 
-				* the input read from unfiltered file 
-				* (i.e., '['  ','  ':'  '{'  '}'  ']') 
+				* the iterations continues further, by following below switch 
+				* cases thats used perform different operations to get the 
+				* desired formatted output (i.e., '['  ','  ':'  '{'  '}'  ']') 
 				*/	
 				switch(l.line[i]) {
 					case '[':
@@ -231,7 +234,7 @@ void filter(FILE *input, FILE *output) {
 						break;
 
 					default:
-						/** to print errors in any */
+						/** to print errors if any */
 						printf("%c",l.line[i]); 
 						break;
 				}
