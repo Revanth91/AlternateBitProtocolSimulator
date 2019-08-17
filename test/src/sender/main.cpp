@@ -25,7 +25,7 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/sendercadmium.hpp"
+#include "../../../include/atomics/sender_cadmium.hpp"
 #include "../../../src/transform.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"

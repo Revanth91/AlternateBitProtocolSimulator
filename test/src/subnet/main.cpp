@@ -16,7 +16,7 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/subnetcadmium.hpp"
+#include "../../../include/atomics/subnet_cadmium.hpp"
 #include "../../../src/transform.cpp"
 
 #define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_input_test.txt"

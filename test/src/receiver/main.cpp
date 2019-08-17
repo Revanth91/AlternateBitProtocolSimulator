@@ -16,7 +16,7 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/receivercadmium.hpp"
+#include "../../../include/atomics/receiver_cadmium.hpp"
 #include "../../../src/transform.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
