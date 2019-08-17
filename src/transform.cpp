@@ -212,7 +212,7 @@ void filter(FILE *input, FILE *output) {
 						}
 						break;
 
-					case '}	':
+					case '}':
 						while(l.line[i]!=']' && l.line[i]!=',') {
 							i++;
 						}

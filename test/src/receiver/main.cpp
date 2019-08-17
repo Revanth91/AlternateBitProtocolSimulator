@@ -17,7 +17,7 @@
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/receivercadmium.hpp"
-#include "../../../transform.cpp"
+#include "../../../src/transform.cpp"
 
 using namespace std;
 
