@@ -140,12 +140,12 @@ void filter(FILE *input, FILE *output) {
 			* this is used to capture the component details from the unfiltered 
 			* output file
 			*/
-			for (i=0;counter!=strlen(l.line);i++) {
+			for (i = 0;counter!= strlen(l.line);i++) {
 				component[i] = l.line[counter++];
 			}
 			
 			/** null character is added to the end of the captured string */
-			component[i]='\0';
+			component[i] = '\0';
 			int colon_counter = 0;
 				
 			for(int i = 0;i<strlen(l.line);i++) {
@@ -159,22 +159,23 @@ void filter(FILE *input, FILE *output) {
 					case '[':
 					
 					case ',':
-						colon_counter=0;
+						colon_counter = 0;
 						while(l.line[i]!=':' && l.line[i]!=']') {
 							i++;
 						}
 						i--;
 						break;
 
+					/** This case is used to capture the port details */
 					case ':':
-						if (colon_counter==0 || colon_counter==1) {
+						if (colon_counter == 0 || colon_counter == 1) {
 							colon_counter++;
 							if (colon_counter==1) {
 								i--;
 							}
 							break;
 						}
-						else if (colon_counter==2) {
+						else if (colon_counter == 2) {
 							colon_counter++;
 							i++;
 							counter = 0;
@@ -185,20 +186,25 @@ void filter(FILE *input, FILE *output) {
 								i++;
 							}
 							i--;
-							port[counter]='\0';
+							port[counter] = '\0';
 							break;
 						}
-						else if (colon_counter==3) {
+						else if (colon_counter == 3) {
 							while(l.line[i]!='{') {
 								i++;
 							}
 							i--;
-							colon_counter=0;
+							colon_counter = 0;
 							break;
 						}
 						else {}
 							break;
 
+					/** 
+					* This case is used to capture the value details and 
+					* also store all the details (i.e., time, value, port, 
+					* component) into the output file.
+					*/
 					case '{' :
 						i++;
 						counter=0;
@@ -207,7 +213,7 @@ void filter(FILE *input, FILE *output) {
 						}
 						value[counter] = '\0';
 						i--;	
-						if(value[0]!='\0'&& value[0]>9) {
+						if(value[0]!='\0'&& value[0] > 9) {
 							fprintf(out,"%s,%s,%s,%s\n",time,value,port,component);
 						}
 						break;
@@ -221,16 +227,17 @@ void filter(FILE *input, FILE *output) {
 	
 					case ']':
 						l = read_line(fp);
-						flag=1;
+						flag = 1;
 						break;
 
 					default:
-						printf("%c",l.line[i]); //error if prints any other
+						/** to print errors in any */
+						printf("%c",l.line[i]); 
 						break;
 				}
 			
-				if (flag==1) {
-					flag=0;
+				if (flag == 1) {
+					flag = 0;
 					break;
 				}
 			}
