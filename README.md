@@ -89,7 +89,8 @@ Below are the instructions to install dependencies on **Windows operating system
 	2. Type `./setup-x86_64.exe -q -P libboost-devel` or `apt-cyg install libboost-devel`. This will install boost library.
 
 3. Cloning the project
-	1. Open the Cygwin terminal and type `git clone --recursive <project URL>` to clone/download the submodules along with the project and move to the ABP project location.
+	1. Open the Cygwin terminal and type `git clone --recursive <project URL>` to clone/download the project and move your Cygwin terminal to the ABP project location. 
+	2. Make a pull request to the repository that contains the submodule's using `git pull origin [repository name]`
 	2. As a new user when you clone/download the repository, you will find that the cadmium and DESTimes folders are empty because they have been used as sub modules in the project.
 	3.  Git expects users to explicitly download the contents of the submodule. hence use `git submodule update --init` to download the submodules into the local repository. 
  
