@@ -27,15 +27,15 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- abp_output.txt
 
 ### doc [This folder contains the documentation]
-1. alternatebitprot.pdf
-2. Cadmium_Documentation_Ubuntu.pdf
-3. Cadmium_Windows.pdf
+1. alternate_bit_protocol.pdf
+2. cadmium_documentation_ubuntu.pdf
+3. cadmium_windows.pdf
 
 ### include [This folder contains the various header files used in the project]
 1. atomics [This folder contains the atomics header files ]
-	- receiverCadmium.hpp
-	- senderCadmium.hpp
-	- subnetCadmium.hpp
+	- receiver_cadmium.hpp
+	- sender_cadmium.hpp
+	- subnet_cadmium.hpp
 2. data_structures [This folder contains the data structures header files]
  	- message.hpp	
 
@@ -53,8 +53,8 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 ### test [This folder contains files realted to the unit tests]
 1. data [This folder contains the input and output files for the unit tests]
 	1. sender [This folder contains data for sender testing and simulator outputs]
-		- sender_input_test_ack_In.txt
-		- sender_input_test_control_In.txt
+		- sender_input_test_ack_in.txt
+		- sender_input_test_control_in.txt
 		- sender_test_output.txt
 	2. subnet [This folder contains data for subnet testing and simulator outputs]
 	    - subnet_input_test.txt
