@@ -30,8 +30,8 @@
 #include "../../../src/org_user_query.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
-#define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_input_test_control_in.txt"
-#define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_input_test_ack_in.txt"
+#define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_test_input_control.txt"
+#define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_test_input_ack.txt"
 
 void output_filter();
 

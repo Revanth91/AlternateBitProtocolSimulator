@@ -21,7 +21,7 @@
 #include "../../../src/org_user_query.cpp"
 
 
-#define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_input_test.txt"
+#define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_test_input.txt"
 #define SUBNET_OUTPUT_FILEPATH "../test/data/subnet/subnet_test_output.txt"
 
 void output_filter();

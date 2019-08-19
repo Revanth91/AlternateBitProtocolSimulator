@@ -21,7 +21,7 @@
 #include "../../../src/org_user_query.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
-#define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_input_test.txt"
+#define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_test_input.txt"
 
 void output_filter();
 
