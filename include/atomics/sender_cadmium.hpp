@@ -38,6 +38,7 @@
 #include "../data_structures/message.hpp"
 
 #define PREPARATION_TIME_CONSTANT "00:00:10"
+#define TIME_OUT_CONSTANT "00:00:20"
 
 using namespace cadmium;
 using namespace std;
@@ -88,7 +89,7 @@ class Sender {
         */
         Sender() noexcept {
             PREPARATION_TIME = TIME(PREPARATION_TIME_CONSTANT);
-            TIME_OUT = TIME("00:00:20");
+            TIME_OUT = TIME(TIME_OUT_CONSTANT);
             state.alt_bit = 0;
             state.next_internal = std::numeric_limits<TIME>::infinity();
             state.model_active = false;
@@ -96,7 +97,7 @@ class Sender {
             
         /**
         * state_type structure provides the state definition 
-        *for the below state variables.
+        * for the below state variables.
         */  
         struct state_type {
             bool ack;
@@ -280,4 +281,4 @@ class Sender {
         }
 };     
 
-#endif // __SENDER_CADMIUM_HPP__
+#endif /** __SENDER_CADMIUM_HPP__ */
