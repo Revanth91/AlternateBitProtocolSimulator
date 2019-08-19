@@ -36,6 +36,8 @@
 
 #include "../data_structures/message.hpp"
 
+#define PREPARATION_TIME_CONSTANT "00:00:10"
+
 using namespace cadmium;
 using namespace std;
 
@@ -78,7 +80,7 @@ class Receiver {
         * acknowledgement_number to 0 and PREPARATION_TIME to 00:00:10.
         */
         Receiver() noexcept {
-            PREPARATION_TIME = TIME("00:00:10");
+            PREPARATION_TIME = TIME(PREPARATION_TIME_CONSTANT);
             state.acknowledgement_number = 0;
             state.sending = false;
         }

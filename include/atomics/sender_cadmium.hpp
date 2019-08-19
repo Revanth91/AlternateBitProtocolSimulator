@@ -37,6 +37,8 @@
 
 #include "../data_structures/message.hpp"
 
+#define PREPARATION_TIME_CONSTANT "00:00:10"
+
 using namespace cadmium;
 using namespace std;
 
@@ -85,7 +87,7 @@ class Sender {
         * and set model active state as false
         */
         Sender() noexcept {
-            PREPARATION_TIME = TIME("00:00:10");
+            PREPARATION_TIME = TIME(PREPARATION_TIME_CONSTANT);
             TIME_OUT = TIME("00:00:20");
             state.alt_bit = 0;
             state.next_internal = std::numeric_limits<TIME>::infinity();
