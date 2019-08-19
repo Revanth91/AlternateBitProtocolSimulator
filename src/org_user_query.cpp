@@ -1,3 +1,33 @@
+/** \brief user_filter function helps in filtering the output as per the user
+* requirement. This function takes the unformatted output files from the 
+* simulator as the input and generates formatted output for the ABP simulator
+* and all the unit tests (sender, subnet, receiver).
+*
+* During the runtime of the program, the terminal will prompt the user to
+* enter three inputs (i.e., start time, end time and component details)
+* and these inputs will be used to print specific outputs i.e., the outputs 
+* within the timeframe and components specified by the user. User can also 
+* provide multiple components with a single space between them. 
+*
+* For example, if the user inputs start time as 00:00:00:000, end time 
+* as 00:01:00:000 and component as subnet1, then the output of the program 
+* will contain message details between the above timeframe and messages 
+* only through subnet1.
+*
+* time			value	port				component
+* 00:00:20:000	1		packet_sent_out		sender1
+* 00:00:20:000	11		data_out			sender1
+* 00:00:36:000	1		ack_received_out	sender1
+* 00:00:46:000	2		packet_sent_out		sender1
+* 00:00:46:000	20		data_out			sender1
+*/
+
+/**
+* Organization    : ARSLab - Carleton University
+* Original author : Cristina Ruiz Martin
+* Modified by     : Revanth Sridhar and Manoj Goli
+*/
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -5,34 +35,54 @@
 #include<ctype.h>
 #include<iostream>
 using namespace std;
-//structure declaration: As we can't pass arrays as function arguments we are wrapping into a structure to make single object
-struct lineWrap1{
-char line[1000];
+
+/**
+* structure line_wrap declaration: As we can't pass arrays as function 
+* arguments in C, we are wrapping into a structure to make single object
+*/
+struct line_wrap_user {
+	char line[1000];
 };
-//start
-//To read each line from a file fp
-// input : File pointer Output: The line that the file pointer is pointing.
-struct lineWrap1 readline1(FILE *fp){
 
-char ch;
-int counter = 0;
-char line[1000];
-struct lineWrap1 line2;
+/**
+* structure read-line is used to read each line from a file fp
+* Input  : File pointer. 
+* Output : The line that the file pointer is pointing.
+*/
+struct line_wrap_user read_line_user(FILE *fp) {
+	char ch; /**< it is used to read characters in the file */
+	int counter = 0; /**< counter variable initialized to 0  */
+	char line[1000];
+	struct line_wrap_user line2;
 
-while( (ch = getc(fp))!=EOF && ch!='\n' ){
-    line[counter++] = ch;
+	/**
+	* this loop allows us to read a particular line in the file.
+	* it keeps increasing the counter value (i.e, line[counter++]) untill it 
+	* finds the EOF or new line.
+	*/
+	while( (ch = getc(fp))!=EOF && ch!='\n' ) {
+    	line[counter++] = ch;
+	}
+
+	/** 
+	* If  there is no further string to read, then '\0' will be added as to say
+	* its the end of that particular sub-string. 
+	*/
+	line[counter] = '\0';
+
+	/**
+	* copies line (source) and stores in line2.line (destination).
+	*/
+	strcpy(line2.line,line);
+	return line2;
 
 }
 
-line[counter] = '\0';
-strcpy(line2.line,line);
-//printf("%s\n",line2.line);
-return line2;
-
-}
-//isLine1 function tells us the type of the line ie time or message
-// if line is Time returns True else False
-int isLine1(struct lineWrap1 line){
+/** 
+* istime_user function tells us the type of the line i.e time or message
+* if the line is Time (example, 00:00:20:000), returns True else False
+*/
+int istime_user(struct line_wrap_user line) {
     if (strlen(line.line) == 12
         && isdigit(line.line[0])
         && isdigit(line.line[1])
@@ -45,301 +95,284 @@ int isLine1(struct lineWrap1 line){
         && isdigit(line.line[11])
         && line.line[2]==':'
         && line.line[5]==':'
-        && line.line[8]==':')
+        && line.line[8]==':') {
         return 1;
-    else
+	}
+    else {
         return 0;
+    }
 }
-//end
 
-struct time{
-char time[13];
+
+struct time {
+	char time[13];
 };
 
-struct cyn{
-char components_yn[7];
+struct cyn {
+	char components_yn[7];
 };
 
 
-
-int time_comp(struct time t1, struct time t2){
-//printf("start time_comp\n");
-//printf("%s %s time func\n",t1.time, t2.time);
-long time_1=0;
-long time_2=0;
-
-char* token_1 = strtok(t1.time, ":");
-
-
-char *temp1;
-char *temp2;
-int counter=0;
-
-while(token_1!=NULL){
-if (counter<3){
-    time_1 = time_1*100+strtol(token_1,&temp1,10);
-    }
-	else{
-	time_1 = time_1*1000+strtol(token_1,&temp1,10);
-    }
-
-    token_1 = strtok(NULL, ":");
-    counter++;
-}
-char* token_2 = strtok(t2.time, ":");
-counter=0;
-
-while (token_2!= NULL) {
-	if (counter<3){
-    time_2 = time_2*100+strtol(token_2,&temp2,10);
-	}
-	else{
-	time_2 = time_2*1000+strtol(token_2,&temp2,10);
+int time_comp(struct time t1, struct time t2) {
+	long time_1 = 0;
+	long time_2 = 0;
+	char *token_1 = strtok(t1.time, ":");
+	char *temp1;
+	char *temp2;
+	int counter = 0;
+    
+    while(token_1!=NULL) {
+		if (counter < 3) {
+   			 time_1 = time_1*100+strtol(token_1,&temp1,10);
+    	}
+		else {
+			time_1 = time_1*1000+strtol(token_1,&temp1,10);
+    	}
+		token_1 = strtok(NULL, ":");
+    	counter++;
 	}
 
-    token_2 = strtok(NULL, ":");
+	char* token_2 = strtok(t2.time, ":");
+	counter=0;
 
-    counter++;
-}
-//printf("%ld %ld %d\n",time_1,time_2,counter);
-
-if (time_1==time_2)
-    return 0;
-else if (time_1>time_2)
-    return 1;
-else
-    return -1;
-}
-
-
-void user_filter(FILE *input, struct time start_t,struct time end_t, struct cyn c, FILE *fpout){
-
-
-
-struct lineWrap1 l;
-struct lineWrap1 l2;
-FILE *fp;
-FILE *out;
-fp=input;
-
-char ch;
-char *str;
-int counter = 0;
-
-fprintf(fpout,"time,value,port,component\n");
-
-char time[13];
-char text1[20];
-char text2[20];
-char text3[20];
-int flag;
-l = readline1(fp);
-
-while(!feof(fp)){
-		if (isLine1(l)){
-				strcpy(time,l.line);
-				l = readline1(fp);
-
+	while (token_2!= NULL) {
+		if (counter < 3) {
+    		time_2 = time_2*100+strtol(token_2,&temp2,10);
 		}
-		else{
-				int counter;
-				for(counter = strlen(l.line)-1;l.line[counter]!=' ';counter--)
-						continue;
-				counter++;
-				int i;
-				for (i=0;counter!=strlen(l.line);i++)
-						text3[i] = l.line[counter++];
-				text3[i]='\0';
+		else {
+			time_2 = time_2*1000+strtol(token_2,&temp2,10);
+		}
+		token_2 = strtok(NULL, ":");
+	    counter++;
+	}
 
 
-				int colon_counter = 0;
-				for(int i = 0;i<strlen(l.line);i++){
+	if (time_1 == time_2) {
+	    return 0;
+	}
+	else if (time_1 > time_2) {
+	    return 1;
+	}
+	else {
+	    return -1;
+	}
+}
 
+void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn c, FILE *fpout) {
+	struct line_wrap_user l;
+	struct line_wrap_user l2;
+	FILE *fp;
+	FILE *out;
+	fp = input;
+	char ch;
+	char *str;
+	int counter = 0;
+	fprintf(fpout,"time,value,port,component\n");
+	char time[13];
+	char port[20];
+	char value[20];
+	char component[20];
+	int flag;
+	l = read_line_user(fp);
 
-						switch(l.line[i]){
-								case '[':
-								case ',':
+	while(!feof(fp)) {
+		if (istime_user(l)) {
+			strcpy(time,l.line);
+			l = read_line_user(fp);
+		}
+		else {
+			int counter;
+			for(counter = strlen(l.line)-1;l.line[counter]!=' ';counter--) {
+				continue;
+			}
+			counter++;
+			int i;
 
-										colon_counter=0;
-										while(l.line[i]!=':' && l.line[i]!=']' )
-												i++;
-										i--;
-										break;
+			for (i=0;counter!=strlen(l.line);i++) {
+				component[i] = l.line[counter++];
+			}
+			component[i]='\0';
+			int colon_counter = 0;
 
-								case ':':
-										if (colon_counter==0 || colon_counter==1){
-												colon_counter++;
-												if (colon_counter==1)
-														i--;
-												break;
-										}
-										else if(colon_counter==2){
-												colon_counter++;
-												i++;
-												counter = 0;
-												int j = 0;
-												while(l.line[i]!=':'){
-																text1[counter] = l.line[i];
-																counter++;
-																i++;
-												}
-												i--;
-												text1[counter]='\0';
-												break;
-										}
-										else if (colon_counter==3){
-												while(l.line[i]!='{')
-														i++;
-												i--;
-												colon_counter=0;
-												break;
+			for(int i = 0;i<strlen(l.line);i++) {
+				switch(l.line[i]) {
+					case '[':
+	
+					case ',':
+						colon_counter = 0;
+						while(l.line[i]!=':' && l.line[i]!=']' ) {
+							i++;
+						}
+						i--;
+						break;
 
-										}
-										else{}
+					case ':':
+						if (colon_counter == 0 || colon_counter == 1) {
+							colon_counter++;
+							if (colon_counter == 1) {
+								i--;
+							}
+							break;
+						}
+						else if(colon_counter == 2) {
+							colon_counter++;
+							i++;
+							counter = 0;
+							int j = 0;
+							while(l.line[i]!=':') {
+								port[counter] = l.line[i];
+								counter++;
+								i++;
+							}
+							i--;
+							port[counter]='\0';
+							break;
+						}
+						else if (colon_counter==3) {
+							while(l.line[i]!='{') {
+								i++;
+							}
+							i--;
+							colon_counter=0;
+							break;
+						}
+						else {}
+						break;
 
-										break;
+					case '{' :
+						i++;
+						counter=0;
+						while(l.line[i]!='}') {
+							value[counter++] = l.line[i++];
+						}
+						value[counter] = '\0';
+						i--;
 
-								case '{' :
-										i++;
-										counter=0;
-										while(l.line[i]!='}')
-												text2[counter++] = l.line[i++];
-										text2[counter] = '\0';
-										i--;
-										if(text2[0]!='\0'&& text2[0]>9){
+						if(value[0]!='\0'&& value[0]>9) {
+                            struct time present_time;
+                            strcpy(present_time.time,time);
+                            char components_yn[7] = "nnnnnn";
+                            if(strcmp(component,"sender1") == 0) {
+                                components_yn[0]='y';
+                            }
+                            else if(strcmp(component,"receiver1") == 0) {
+                                components_yn[1]='y';
+                            }
+                            else if(strcmp(component,"subnet1") == 0) {
+                                components_yn[2]='y';
+                            }
+                            else if(strcmp(component,"subnet2") == 0) {
+                                components_yn[3]='y';
+                            }
+                            else if(strcmp(component,"generator_con") == 0) {
+                                components_yn[4]='y';
+                            }
+                            else if(strcmp(component,"generator") == 0) {
+                                components_yn[5]='y';
+                            }
+                            else if(strcmp(component,"generator_ack") == 0) {
+ 								components_yn[6]='y';
+                            }
+                            int index=0;
+                
+                            for (int a=0;a<strlen(components_yn);a++) {
+                                if(components_yn[a]=='y') {
+                                    index = a;
+                          		    break;
+                                }
+                            }
+                         
+                            if (time_comp(present_time,start_t)>-1 && time_comp(end_t,present_time)>-1 && c.components_yn[index]=='y') {
+                               	fprintf(fpout,"%s,%s,%s,%s\n",time,value,port,component);
+                            }
+						}
+						break;
 
-                                                struct time present_time;
-                                                strcpy(present_time.time,time);
+					case '}':
+						while(l.line[i]!=']' && l.line[i]!=',') {
+							i++;
+						}
+						i--;
+						break;
+		
+					case ']':
+						l = read_line_user(fp);
+						flag=1;
+						break;
 
-                                                char components_yn[7] = "nnnnnn";
-
-                                                if(strcmp(text3,"sender1")==0)
-                                                    components_yn[0]='y';
-                                                else if(strcmp(text3,"receiver1")==0)
-                                                    components_yn[1]='y';
-                                                else if(strcmp(text3,"subnet1")==0)
-                                                        components_yn[2]='y';
-                                                else if(strcmp(text3,"subnet2")==0)
-                                                        components_yn[3]='y';
-                                                else if(strcmp(text3,"generator_con")==0)
-                                                        components_yn[4]='y';
-                                                else if(strcmp(text3,"generator")==0)
-                                                        components_yn[5]='y';
-                                                 else if(strcmp(text3,"generator_ack")==0)
-            											components_yn[6]='y';
-                                                //(c.components_yn,components_yn)
-                                                int index=0;
-                                                for (int a=0;a<strlen(components_yn);a++){
-                                                    if(components_yn[a]=='y'){
-                                                        index = a;
-                                                        break;
-                                                    }
-                                                }
-                                                //printf("%d %d %d ",time_comp(present_time,start_t),time_comp(end_t,present_time),c.components_yn[index]==components_yn[index]);
-                                                //printf("%s,%s,%s,%s\n",time,text2,text1,text3);
-                                                //printf("%s %s\n",components_yn,c.components_yn);
-                                                if (time_comp(present_time,start_t)>-1 && time_comp(end_t,present_time)>-1 && c.components_yn[index]=='y')
-                                                    {
-                                                    	//printf("%s %s %s times\n",present_time.time,start_t.time,end_t.time);
-                                                    	//printf("%d %d ",time_comp(present_time,start_t),time_comp(end_t,present_time));
-                                                    	//printf("%c %c\n",components_yn[index],c.components_yn[index]);
-                                                    	fprintf(fpout,"%s,%s,%s,%s\n",time,text2,text1,text3);
-                                                    	//printf("%s,%s,%s,%s\n",time,text2,text1,text3);
-                                                    }
-										}
-
-										break;
-								case '}':
-										while(l.line[i]!=']' && l.line[i]!=',')
-												i++;
-										i--;
-										break;
-								case ']':
-										l = readline1(fp);
-										flag=1;
-										break;
-
-								default:
-										printf("%c hello",l.line[i]); //error if prints any other
-										break;
-								}
-								if (flag==1){
-										flag=0;
-										break;
-								}
+					default:
+						printf("%c hello",l.line[i]); //error if prints any other
+						break;
 				}
+				
+				if (flag==1) {
+					flag=0;
+					break;
+				}
+			}
 		}
+	}
 }
 
-}
 
+int main_test(FILE *fp,FILE *fpout) {
+	char start_time[13];
+	char end_time[13];
+	long start_t;
+	long end_t;
+	struct time t1,t2;
+	char components[1000];
+	char components_yn[7]="nnnnnn";
+	
+	printf("Enter Starting Time:");
+	scanf("%s",start_time);
+	
+	printf("Enter End Time:");
+	scanf("%s",end_time);
+	
+	//fflush(stdin)//for windows
+	fpurge(stdin);//for linux
 
+	printf("Enter components seperated with a space:");
+	scanf("%[^\n]",components);
 
-int main_test(FILE *fp,FILE *fpout){
-//FILE *fp;
-char start_time[13];
-char end_time[13];
+	strcpy(t1.time,start_time);
+	strcpy(t2.time, end_time);
 
-long start_t;
-long end_t;
+	char* token = strtok(components, " ");
 
-struct time t1,t2;
-
-
-
-char components[1000];
-char components_yn[7]="nnnnnn";
-
-printf("Enter Starting Time:");
-scanf("%s",start_time);
-
-printf("Enter End Time:");
-scanf("%s",end_time);
-//fflush(stdin)//for windows
-fpurge(stdin);//for linux
-printf("Enter components seperated with a space:");
-scanf("%[^\n]",components);
-
-//strcpy(start_time,"00:00:10:000");
-//strcpy(end_time,"00:21:48:000");
-strcpy(t1.time,start_time);
-strcpy(t2.time, end_time);
-
-//strcpy(components,"sender1");
-
-char* token = strtok(components, " ");
-
-// Keep printing tokens while one of the
-// delimiters present in str[].
-while (token != NULL) {
-    if(strcmp(token,"sender1")==0)
-        components_yn[0]='y';
-    else if(strcmp(token,"receiver1")==0)
-        components_yn[1]='y';
-    else if(strcmp(token,"subnet1")==0)
+	// Keep printing tokens while one of the
+	// delimiters present in str[].
+	while (token != NULL) {
+    	if(strcmp(token,"sender1") == 0) {
+        	components_yn[0]='y';
+    	}
+    	else if(strcmp(token,"receiver1") == 0) {
+        	components_yn[1]='y';
+    	}
+    	else if(strcmp(token,"subnet1") == 0) {
             components_yn[2]='y';
-    else if(strcmp(token,"subnet2")==0)
+    	}
+    	else if(strcmp(token,"subnet2") == 0) {
             components_yn[3]='y';
-    else if(strcmp(token,"generator_con")==0)
+    	}
+    	else if(strcmp(token,"generator_con") == 0) {
             components_yn[4]='y';
-    else if(strcmp(token,"generator")==0)
+    	}
+    	else if(strcmp(token,"generator") == 0) {
             components_yn[5]='y';
-    else if(strcmp(token,"generator_ack")==0)
+    	}
+    	else if(strcmp(token,"generator_ack") == 0) {
             components_yn[6]='y';
-    token = strtok(NULL, " ");
+    	}
+    	token = strtok(NULL, " ");
+	}
+
+	struct cyn c;
+	strcpy(c.components_yn,components_yn);
+	
+	if(fp == NULL || fpout == NULL) {
+		printf("ERROR READING THE FILE");
+	}
+	user_filter(fp,t1,t2,c,fpout);
 }
-//printf("%s\n",components_yn);
-struct cyn c;
-strcpy(c.components_yn,components_yn);
-
-//fp = fopen("data/output/abp_output.txt","r");
-
-if(fp == NULL || fpout==NULL) {
-	printf("ERROR READING THE FILE");
-}
-user_filter(fp,t1,t2,c,fpout);
-
-
-}
-
-//int main(){main_test();}
