@@ -22,14 +22,16 @@
 #include <cadmium/logger/tuple_to_ostream.hpp>
 #include <cadmium/logger/common_loggers.hpp>
 
-#include "../../../lib/vendor/ndtime.hpp"
-#include "../../../lib/vendor/iestream.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
+#include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/sender_cadmium.hpp"
+#include "../../../src/transform.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
 #define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_input_test_control_in.txt"
 #define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_input_test_ack_in.txt"
+
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
@@ -259,5 +261,18 @@ int main() {
         std::chrono::duration<double, std::ratio<1>>
     >(hclock::now() - start).count();
     cout<<"Simulation took:"<<elapsed<<"sec"<<endl;
+    
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files.
+     * The formatting is performed with the help of filter() function 
+     * by passing the arguments input and output
+     */
+    FILE *input;
+    FILE *output;
+    input = fopen("../test/data/sender/sender_test_output.txt","r");
+    output = fopen("../test/data/sender/sender_test_processed_output.csv","w");
+    filter(input,output);
+
     return 0;
 }

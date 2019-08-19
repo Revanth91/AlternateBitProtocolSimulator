@@ -13,15 +13,15 @@
 #include <cadmium/logger/tuple_to_ostream.hpp>
 #include <cadmium/logger/common_loggers.hpp>
 
-
-#include "../../../lib/vendor/ndtime.hpp"
-#include "../../../lib/vendor/iestream.hpp"
-
+#include "../../../lib/DESTimes/include/NDTime.hpp"
+#include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/receiver_cadmium.hpp"
+#include "../../../src/transform.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
 #define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_input_test.txt"
+
 
 using namespace std;
 
@@ -127,5 +127,18 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     r.run_until(NDTime("04:00:00:000"));
     auto elapsed = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << elapsed << "sec" << endl;
+    
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files.
+     * The formatting is performed with the help of filter() function 
+     * by passing the arguments input and output
+     */
+    FILE *input;
+    FILE *output;
+    input = fopen("../test/data/receiver/receiver_test_output.txt","r");
+    output = fopen("../test/data/receiver/receiver_test_processed_output.csv","w");
+    filter(input,output);
+    
     return 0;
 }

@@ -25,6 +25,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- input_abp_0.txt
 2. output [This folder contains the output files]
 	- abp_output.txt
+	- abp_processed_output.csv
 
 ### doc [This folder contains the documentation]
 1. alternate_bit_protocol.pdf
@@ -37,20 +38,20 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- sender_cadmium.hpp
 	- subnet_cadmium.hpp
 2. data_structures [This folder contains the data structures header files]
- 	- message.hpp	
+ 	- message.hpp
+3. transform.hpp	
 
 ### lib [This folder contains the third party library files]
 1. cadmium [This folder contains the cadmium library files]
 2. DESTimes [This folder contains the DESTimes library files]
-3. vendor [This folder contains vendor header files]
-	- iestream.hpp
-	- NDTime.hpp
+3. iestream.hpp
 	
 ### src [This folder contains the source files used for the simualator] 
 1. data_structures [This folder contains the source files from data_structures]
 	- message.cpp
 2. top_model [This folder contains the source files for top_model]
 	- main.cpp
+3. tranform.cpp
 
 ### test [This folder contains files realted to the unit tests]
 1. data [This folder contains the input and output files for the unit tests]
@@ -58,12 +59,15 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 		- sender_input_test_ack_in.txt
 		- sender_input_test_control_in.txt
 		- sender_test_output.txt
+		- sender_test__processed_output.csv
 	2. subnet [This folder contains data for subnet testing and simulator outputs]
 	    - subnet_input_test.txt
 	    - subnet_test_output.txt
+	    - subnet_test__processed_output.csv
 	3. receiver [This folder contains data for receiver testing and simulator outputs]
 	    - receiver_input_test.txt
 	    - receiver_test_output.txt
+	    - receiver_test__processed_output.csv
 
 
 2. src [This folder contains the source code files for the unit tests]
@@ -89,9 +93,14 @@ Below are the instructions to install dependencies on **Windows operating system
 2. Cadmium dependencies installations: 
 	1. Open the Cygwin terminal in the location where you have downloaded the setup (.exe) file for cygwin. 
 	2. Type `./setup-x86_64.exe -q -P libboost-devel` or `apt-cyg install libboost-devel`. This will install boost library.
-	3. Select a folder to download the Cadmium and DESTimes files for the project. 
-	4. Open the Cygwin terminal inside this folder location and type `git clone https://github.com/SimulationEverywhere/cadmium` to download the Cadmium dependencies.  
-	5. Type `git clone https://github.com/Laouen/DESTimes.git` to download the DESTimes dependencies. 
+
+3. Cloning the project
+	1. Open the Cygwin terminal and type `git clone --recursive <project URL>` to clone/download the project and move your Cygwin terminal to the ABP project location. 
+	2. Make a pull request to the repository that contains the submodule's using `git pull origin [repository name]`
+	2. As a new user when you clone/download the repository, you will find that the cadmium and DESTimes folders are empty because they have been used as sub modules in the project.
+	3.  Git expects users to explicitly download the contents of the submodule. hence use `git submodule update --init` to download the submodules into the local repository. 
+ 
+Alternatively, if you want to clone/download the cadmium and DESTimes in a different location, you may follow the instructions available in the [documentation](https://github.com/Revanth91/AlternateBitProtocolSimulator/tree/master/doc) section. .
 
 For **Linux operating system**, there is a seperate set of instructions available in the [documentation](https://github.com/Revanth91/AlternateBitProtocolSimulator/tree/master/doc) section.
 
@@ -105,7 +114,7 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 		 Example: cd bin
 5. In the terminal type "./NAME_OF_THE_COMPILED_FILE NAME_OF_THE_INPUT_FILE". For this test you need to type:
 		 `./ABP ../data/input/input_abp_1.txt`
-6. To check the output of the simulation, open `"../data/output/abp_output.txt"`
+6. To check the output of the simulation, open `"../data/output/abp_output.txt"`. Similarly, to check the formatted output, open `"../data/output/abp_processed_output.csv"`
 7. To execute the simulator with different inputs,
 	1. Create new .txt files with the same structure as input_abp_0.txt or input_abp_1.txt
 	2. Run the simulator using the instructions in step 4 of this [section](#Run-the-simulator).
@@ -122,7 +131,7 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 	3. To run the test, type in the terminal "./NAME_OF_THE_COMPILED_FILE". For this specific test you need 
 	   to type:
 		  `./SENDER_TEST`
-	4. To check the output of the test, open `"../test/data/subnet/subnet_test_output.txt"`
+	4. To check the output of the test, open `"../test/data/subnet/subnet_test_output.txt"`. Similarly, to check the formatted output, open `"../test/data/subnet/subnet_test_processed_output.csv"`
 2. To run subnet and receiver tests, the steps are analogous to step 1 of this [section](#Run-the-unit-tests).
 
 ## Contributions 
