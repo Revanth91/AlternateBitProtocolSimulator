@@ -191,4 +191,4 @@ class Receiver {
         }
 };     
 
-#endif // __RECEIVER_CADMIUM_HPP__
+#endif /** __RECEIVER_CADMIUM_HPP__ */

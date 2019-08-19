@@ -202,4 +202,4 @@ class Subnet {
         }
 };    
 
-#endif // __SUBNET_CADMIUM_HPP__
+#endif /** __SUBNET_CADMIUM_HPP__ */
