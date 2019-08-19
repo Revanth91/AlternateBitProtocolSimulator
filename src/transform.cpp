@@ -18,9 +18,6 @@
 * Modified by     : Manoj Goli and Revanth Sridhar
 */
 
-#include<string.h>
-#include<stdio.h>
-
 #include "../include/transform.hpp"
 
 /** 
