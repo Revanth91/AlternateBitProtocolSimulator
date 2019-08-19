@@ -26,7 +26,9 @@
 #define MAIN_OUTPUT_FILEPATH "../data/output/abp_output.txt"
 
 #include "../transform.cpp"
+#include "../org_user_query.cpp"
 
+void output_filter();
 
 using namespace std;
 
@@ -219,6 +221,20 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     input = fopen("../data/output/abp_output.txt","r");
     output = fopen("../data/output/abp_processed_output.csv","w");
     filter(input,output);
-    
+    fclose(input);
+    fclose(output);
+    output_filter();
     return 0;
+}
+
+void output_filter(){
+  FILE *fpp;
+  FILE *fppout;
+
+  fpp = fopen("../data/output/abp_output.txt","r");
+  fppout = fopen("../data/output/abp_query_output.csv","w");
+
+  main_test(fpp,fppout);
+  fclose(fpp);
+  fclose(fppout);
 }

@@ -25,13 +25,15 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/sendercadmium.hpp"
+#include "../../../include/atomics/sender_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/org_user_query.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
 #define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_input_test_control_in.txt"
 #define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_input_test_ack_in.txt"
 
+void output_filter();
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
@@ -76,6 +78,7 @@ class ApplicationGen : public iestream_input<message_t, T> {
             file_path
         ) {}
 };
+
 
 int main() {
     /**
@@ -267,6 +270,20 @@ int main() {
     input = fopen("../test/data/sender/sender_test_output.txt","r");
     output = fopen("../test/data/sender/sender_test_processed_output.csv","w");
     filter(input,output);
+    fclose(input);
+    fclose(output);
+    output_filter();
 
     return 0;
+}
+void output_filter(){
+    FILE *fpp;
+    FILE *fppout;
+
+    fpp = fopen("../test/data/sender/sender_test_output.txt","r");
+    fppout = fopen("../test/data/sender/sender_test_query_output.csv","w");
+
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
 }

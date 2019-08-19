@@ -16,11 +16,15 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/subnetcadmium.hpp"
+#include "../../../include/atomics/subnet_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/org_user_query.cpp"
+
 
 #define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_input_test.txt"
 #define SUBNET_OUTPUT_FILEPATH "../test/data/subnet/subnet_test_output.txt"
+
+void output_filter();
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
@@ -125,6 +129,21 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     input = fopen("../test/data/subnet/subnet_test_output.txt","r");
     output = fopen("../test/data/subnet/subnet_test_processed_output.csv","w");
     filter(input,output);
+    fclose(input);
+    fclose(output);
+    output_filter();
     
     return 0;
+}
+
+void output_filter(){
+    FILE *fpp;
+    FILE *fppout;
+
+    fpp = fopen("../test/data/subnet/subnet_test_output.txt","r");
+    fppout = fopen("../test/data/subnet/subnet_test_query_output.csv","w");
+
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
 }

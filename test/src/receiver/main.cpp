@@ -16,12 +16,14 @@
 #include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/iestream.hpp"
 #include "../../../include/data_structures/message.hpp"
-#include "../../../include/atomics/receivercadmium.hpp"
+#include "../../../include/atomics/receiver_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/org_user_query.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
 #define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_input_test.txt"
 
+void output_filter();
 
 using namespace std;
 
@@ -133,6 +135,21 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     input = fopen("../test/data/receiver/receiver_test_output.txt","r");
     output = fopen("../test/data/receiver/receiver_test_processed_output.csv","w");
     filter(input,output);
-    
+    fclose(input);
+    fclose(output);
+    output_filter();
+
     return 0;
+}
+
+void output_filter(){
+  FILE *fpp;
+  FILE *fppout;
+
+  fpp = fopen("../test/data/receiver/receiver_test_output.txt","r");
+  fppout = fopen("../test/data/receiver/receiver_test_query_output.csv","w");
+
+  main_test(fpp,fppout);
+  fclose(fpp);
+  fclose(fppout);
 }
