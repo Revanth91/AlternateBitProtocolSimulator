@@ -43,13 +43,13 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 2. data_structures [This folder contains the data structures header files]
  	- message.hpp
 3. transform.hpp	
+4. user_output_query.hpp
 
 ### lib [This folder contains the third party library files]
 1. cadmium [This folder contains the cadmium library files]
 2. DESTimes [This folder contains the DESTimes library files]
 3. iestream.hpp
-4. user_output_query.hpp
-	
+
 ### src [This folder contains the source files used for the simualator] 
 1. data_structures [This folder contains the source files from data_structures]
 	- message.cpp
