@@ -26,7 +26,7 @@
 #define MAIN_OUTPUT_FILEPATH "../data/output/abp_output.txt"
 
 #include "../transform.cpp"
-#include "../org_user_query.cpp"
+#include "../user_output_query.cpp"
 
 void output_filter();
 

@@ -29,7 +29,7 @@ struct line_wrap {
 struct line_wrap read_line(FILE *fp) {
 	char ch; /**< it is used to read characters in the file */
 	int counter = 0; /**< counter variable initialized to 0  */
-	char line[1000]; /**<  */
+	char line[1000]; 
 	struct line_wrap line2;
 	
 	/**

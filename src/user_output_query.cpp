@@ -28,55 +28,7 @@
 * Modified by     : Revanth Sridhar and Manoj Goli
 */
 
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<math.h>
-#include<ctype.h>
-#include<iostream>
-using namespace std;
-
-/**
-* structure line_wrap declaration: As we can't pass arrays as function 
-* arguments in C, we are wrapping into a structure to make single object
-*/
-struct line_wrap_user {
-	char line[1000];
-};
-
-/**
-* structure read-line is used to read each line from a file fp
-* Input  : File pointer. 
-* Output : The line that the file pointer is pointing.
-*/
-struct line_wrap_user read_line_user(FILE *fp) {
-	char ch; /**< it is used to read characters in the file */
-	int counter = 0; /**< counter variable initialized to 0  */
-	char line[1000];
-	struct line_wrap_user line2;
-
-	/**
-	* this loop allows us to read a particular line in the file.
-	* it keeps increasing the counter value (i.e, line[counter++]) untill it 
-	* finds the EOF or new line.
-	*/
-	while( (ch = getc(fp))!=EOF && ch!='\n' ) {
-    	line[counter++] = ch;
-	}
-
-	/** 
-	* If  there is no further string to read, then '\0' will be added as to say
-	* its the end of that particular sub-string. 
-	*/
-	line[counter] = '\0';
-
-	/**
-	* copies line (source) and stores in line2.line (destination).
-	*/
-	strcpy(line2.line,line);
-	return line2;
-
-}
+#include "../include/user_output_query.hpp"
 
 /** 
 * istime_user function tells us the type of the line i.e time or message
@@ -102,20 +54,6 @@ int istime_user(struct line_wrap_user line) {
         return 0;
     }
 }
-
-/**
-* this structure is used to receive the time from user during runtime
-*/
-struct time {
-	char time[13];
-};
-
-/**
-* this structure is get the component details from user during runtime
-*/
-struct cyn {
-	char components_yn[7];
-};
 
 /**
 * This function helps in splitting the user entered string into tokens. 
@@ -392,10 +330,11 @@ int main_test(FILE *fp,FILE *fpout) {
 	char components[1000];
 	char components_yn[7]="nnnnnn";
 	
-	printf("\nEnter Starting Time:");
+	printf("\nPlease enter the below details in small letters to receive specific outputs");
+	printf("\nEnter Start Time :");
 	scanf("%s",start_time);
 	
-	printf("Enter End Time:");
+	printf("Enter End Time   :");
 	scanf("%s",end_time);
 	
 	/** 
@@ -404,8 +343,10 @@ int main_test(FILE *fp,FILE *fpout) {
 	*/
 	fpurge(stdin);
 
-	printf("Enter components seperated with a space:");
+	printf("Enter components seperated with a space :");
 	scanf("%[^\n]",components);
+
+	//printf("Output files are generated in the respective folders. Please check!");
 
 	strcpy(t1.time,start_time);
 	strcpy(t2.time, end_time);

@@ -1,1 +1,7 @@
 time,value,port,component
+00:00:20:000,1,out,receiver1
+00:00:40:000,0,out,receiver1
+00:01:02:000,1,out,receiver1
+00:01:35:000,0,out,receiver1
+00:01:45:000,0,out,receiver1
+00:02:05:000,1,out,receiver1

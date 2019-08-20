@@ -18,7 +18,7 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/receiver_cadmium.hpp"
 #include "../../../src/transform.cpp"
-#include "../../../src/org_user_query.cpp"
+#include "../../../src/user_output_query.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
 #define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_test_input.txt"

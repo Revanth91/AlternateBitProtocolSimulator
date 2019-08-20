@@ -27,7 +27,7 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/sender_cadmium.hpp"
 #include "../../../src/transform.cpp"
-#include "../../../src/org_user_query.cpp"
+#include "../../../src/user_output_query.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
 #define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_test_input_control.txt"

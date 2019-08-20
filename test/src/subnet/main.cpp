@@ -18,7 +18,7 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/subnet_cadmium.hpp"
 #include "../../../src/transform.cpp"
-#include "../../../src/org_user_query.cpp"
+#include "../../../src/user_output_query.cpp"
 
 
 #define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_test_input.txt"
