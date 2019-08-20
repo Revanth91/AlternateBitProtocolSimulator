@@ -116,7 +116,8 @@ int time_comp(struct time t1, struct time t2) {
 * @param struct time end_t is used to pass the user entered end time
 * @param struct cyn c is used to pass the user entered component details
 */
-void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn c, FILE *fpout) {
+void user_filter(FILE *input, struct time start_t, 
+				 struct time end_t, struct cyn c, FILE *fpout) {
 	struct line_wrap_user l;
 	struct line_wrap_user l2;
 	FILE *fp; /**< intialize pointer variable for input file */
@@ -285,7 +286,8 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
                             if (time_comp(present_time,start_t)>-1 
                             	&& time_comp(end_t,present_time)>-1 
                             	&& c.components_yn[index]=='y') {
-                               	fprintf(fpout,"%s,%s,%s,%s\n",time,value,port,component);
+                               	fprintf(fpout,"%s,%s,%s,%s\n",
+                               			time,value,port,component);
                             }
 						}
 						break;
@@ -330,7 +332,8 @@ int main_test(FILE *fp,FILE *fpout) {
 	char components[1000];
 	char components_yn[7]="nnnnnn";
 	
-	printf("\nPlease enter the below details in small letters to receive specific outputs");
+	printf("\nPlease enter the below details in small letters
+		  to receive specific outputs");
 	printf("\nEnter Start Time :");
 	scanf("%s",start_time);
 	
@@ -346,7 +349,7 @@ int main_test(FILE *fp,FILE *fpout) {
 	printf("Enter components seperated with a space :");
 	scanf("%[^\n]",components);
 
-	//printf("Output files are generated in the respective folders. Please check!");
+	/** printf("Output files are generated in the respective folders. Please check!"); */
 
 	strcpy(t1.time,start_time);
 	strcpy(t2.time, end_time);
