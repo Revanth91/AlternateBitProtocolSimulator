@@ -139,7 +139,7 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 	   to type:
 		  `./SENDER_TEST`
 	4. While executing the above command, the simulation will be performed and terminal will prompt to enter start_time, end_time and components details. This is used to filter the output received from the sender unit test. Please proceed in entering the time in HH:MM:SS:SSS format and include a single space if entering multiple components. 
-  5. To check the output of the simulation, go to `"../test/data/sender/ "` folder, 
+  	5. To check the output of the simulation, go to `"../test/data/sender/ "` folder, 
 		1. open **sender_test_output.txt** to see the actual output of the simulator. 
 		2. Open **sender_test_processed_output.csv** file to see the output which are in understandable format. 
 		3. Open **sender_test_query_output.csv file** to see the output filtered as per the inputs given by user during runtime.
