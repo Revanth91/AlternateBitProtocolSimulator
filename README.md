@@ -48,6 +48,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 1. cadmium [This folder contains the cadmium library files]
 2. DESTimes [This folder contains the DESTimes library files]
 3. iestream.hpp
+4. user_output_query.hpp
 	
 ### src [This folder contains the source files used for the simualator] 
 1. data_structures [This folder contains the source files from data_structures]
@@ -55,6 +56,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 2. top_model [This folder contains the source files for top_model]
 	- main.cpp
 3. tranform.cpp
+4. user_output_query.cpp
 
 ### test [This folder contains files realted to the unit tests]
 1. data [This folder contains the input and output files for the unit tests]
