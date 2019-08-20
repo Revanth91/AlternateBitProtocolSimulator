@@ -28,6 +28,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- abp_input_0.txt
 2. output [This folder contains the output files]
 	- abp_output.txt
+	- abp_processed_output.csv
 
 ### doc [This folder contains the documentation]
 1. alternate_bit_protocol.pdf
@@ -40,7 +41,8 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- sender_cadmium.hpp
 	- subnet_cadmium.hpp
 2. data_structures [This folder contains the data structures header files]
- 	- message.hpp	
+ 	- message.hpp
+3. transform.hpp	
 
 ### lib [This folder contains the third party library files]
 1. cadmium [This folder contains the cadmium library files]
@@ -52,6 +54,7 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 	- message.cpp
 2. top_model [This folder contains the source files for top_model]
 	- main.cpp
+3. tranform.cpp
 
 ### test [This folder contains files realted to the unit tests]
 1. data [This folder contains the input and output files for the unit tests]
@@ -59,12 +62,15 @@ This ABP simulator is implemented in Cadmium. The behaviour and specification of
 		- sender_test_input_ack.txt
 		- sender_test_input_control.txt
 		- sender_test_output.txt
+		- sender_test__processed_output.csv
 	2. subnet [This folder contains data for subnet testing and simulator outputs]
 	    - subnet_test_input.txt
 	    - subnet_test_output.txt
+	    - subnet_test__processed_output.csv
 	3. receiver [This folder contains data for receiver testing and simulator outputs]
 	    - receiver_test_input.txt
 	    - receiver_test_output.txt
+	    - receiver_test__processed_output.csv
 
 
 2. src [This folder contains the source code files for the unit tests]
@@ -133,10 +139,11 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 	   to type:
 		  `./SENDER_TEST`
 	4. While executing the above command, the simulation will be performed and terminal will prompt to enter start_time, end_time and components details. This is used to filter the output received from the sender unit test. Please proceed in entering the time in HH:MM:SS:SSS format and include a single space if entering multiple components. 
-    5. To check the output of the simulation, go to `"../test/data/sender/ "` folder, 
+  5. To check the output of the simulation, go to `"../test/data/sender/ "` folder, 
 		1. open **sender_test_output.txt** to see the actual output of the simulator. 
 		2. Open **sender_test_processed_output.csv** file to see the output which are in understandable format. 
 		3. Open **sender_test_query_output.csv file** to see the output filtered as per the inputs given by user during runtime.
+
 2. To run subnet and receiver tests, the steps are analogous to step 1 of this [section](#Run-the-unit-tests).
 
 ## Contributions 

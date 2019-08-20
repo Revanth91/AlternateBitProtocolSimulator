@@ -129,7 +129,13 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     r.run_until(NDTime("04:00:00:000"));
     auto elapsed = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << elapsed << "sec" << endl;
-
+    
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files.
+     * The formatting is performed with the help of filter() function 
+     * by passing the arguments input and output
+     */
     FILE *input;
     FILE *output;
     input = fopen("../test/data/receiver/receiver_test_output.txt","r");
