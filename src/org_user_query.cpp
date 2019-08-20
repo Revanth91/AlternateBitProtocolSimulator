@@ -103,16 +103,27 @@ int istime_user(struct line_wrap_user line) {
     }
 }
 
-
+/**
+* this structure is used to receive the time from user during runtime
+*/
 struct time {
 	char time[13];
 };
 
+/**
+* this structure is get the component details from user during runtime
+*/
 struct cyn {
 	char components_yn[7];
 };
 
-
+/**
+* This function helps in splitting the user entered string into tokens. 
+* strok/strol functions is used to perform this activity and store the 
+* starttime in time_1 and endtime in time_2.
+* @param struct time t1 has a start time provided by user
+* @param struct time t2 has a end time provided by user
+*/
 int time_comp(struct time t1, struct time t2) {
 	long time_1 = 0;
 	long time_2 = 0;
@@ -158,43 +169,86 @@ int time_comp(struct time t1, struct time t2) {
 	}
 }
 
+
+/**
+* This function helps in filtering the output as per the user requirement. 
+* @param *input points to the unfiltered input text file
+* @param *output to return the filtered output 
+* @param struct time start_t is used to pass the user entered start time
+* @param struct time end_t is used to pass the user entered end time
+* @param struct cyn c is used to pass the user entered component details
+*/
 void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn c, FILE *fpout) {
 	struct line_wrap_user l;
 	struct line_wrap_user l2;
-	FILE *fp;
-	FILE *out;
-	fp = input;
+	FILE *fp; /**< intialize pointer variable for input file */
+	FILE *out; /**< intialize pointer variable for output file  */
+	fp = input; /**< used to store input file   */
 	char ch;
 	char *str;
-	int counter = 0;
-	fprintf(fpout,"time,value,port,component\n");
-	char time[13];
-	char port[20];
-	char value[20];
-	char component[20];
-	int flag;
+	int counter = 0; /**< counter variable */
+	char time[13]; /**< variable to strore time details */
+	char port[20]; /**< variable to store port details*/
+	char value[20]; /**< variable to store value details */
+	char component[20]; /**< variable to store component details*/
+	int flag; /**< flag variable */
+
+	/** uses the structure read_line and stores the content in l*/
 	l = read_line_user(fp);
 
+	/** this is the header data printed in the output file 	*/
+	fprintf(fpout,"time,value,port,component\n");
+
+	/** 
+	* the loop is executed until the end of file is true using the 
+	* pre-defined function feof in C language
+	*/
 	while(!feof(fp)) {
+
+		/**
+		* loop is executed based on the return value from istime function. 
+		* If return value from istime_user function is 1 (i.e., true), then we 
+		* copy the time into time variable. 
+		* If the return value from istime_user function is 0 (i.e., false), then 
+		* loop goes to the else condition. 
+		*/
 		if (istime_user(l)) {
 			strcpy(time,l.line);
 			l = read_line_user(fp);
 		}
 		else {
 			int counter;
+
+			/**
+			* calculates the length of a particular line and loops until there
+			* is a space if it finds a space, it breaks the loop and increments
+			* the counter value
+			*/
 			for(counter = strlen(l.line)-1;l.line[counter]!=' ';counter--) {
 				continue;
 			}
 			counter++;
 			int i;
 
+			/**
+			* this is used to capture the component details from the unfiltered 
+			* output file
+			*/
 			for (i=0;counter!=strlen(l.line);i++) {
 				component[i] = l.line[counter++];
 			}
+
+			/** null character is added to the end of the captured string */
 			component[i]='\0';
 			int colon_counter = 0;
 
 			for(int i = 0;i<strlen(l.line);i++) {
+
+				/**
+				* the iterations continues further, by following below switch 
+				* cases thats used perform different operations to get the 
+				* desired formatted output (i.e., '['  ','  ':'  '{'  '}'  ']') 
+				*/	
 				switch(l.line[i]) {
 					case '[':
 	
@@ -206,6 +260,7 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
 						i--;
 						break;
 
+					/** This case is used to capture the port details */
 					case ':':
 						if (colon_counter == 0 || colon_counter == 1) {
 							colon_counter++;
@@ -239,6 +294,11 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
 						else {}
 						break;
 
+					/** 
+					* This case is used to capture the value details and 
+					* also store all the details (i.e., time, value, port, 
+					* component) into the output file.
+					*/
 					case '{' :
 						i++;
 						counter=0;
@@ -248,10 +308,12 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
 						value[counter] = '\0';
 						i--;
 
+
 						if(value[0]!='\0'&& value[0]>9) {
                             struct time present_time;
                             strcpy(present_time.time,time);
                             char components_yn[7] = "nnnnnn";
+
                             if(strcmp(component,"sender1") == 0) {
                                 components_yn[0]='y';
                             }
@@ -282,7 +344,9 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
                                 }
                             }
                          
-                            if (time_comp(present_time,start_t)>-1 && time_comp(end_t,present_time)>-1 && c.components_yn[index]=='y') {
+                            if (time_comp(present_time,start_t)>-1 
+                            	&& time_comp(end_t,present_time)>-1 
+                            	&& c.components_yn[index]=='y') {
                                	fprintf(fpout,"%s,%s,%s,%s\n",time,value,port,component);
                             }
 						}
@@ -301,7 +365,8 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
 						break;
 
 					default:
-						printf("%c hello",l.line[i]); //error if prints any other
+						/** to print errors if any */
+						printf("%c unable to print",l.line[i]); 
 						break;
 				}
 				
@@ -314,7 +379,10 @@ void user_filter(FILE *input, struct time start_t, struct time end_t, struct cyn
 	}
 }
 
-
+/*
+* 
+*
+*/
 int main_test(FILE *fp,FILE *fpout) {
 	char start_time[13];
 	char end_time[13];
@@ -324,14 +392,17 @@ int main_test(FILE *fp,FILE *fpout) {
 	char components[1000];
 	char components_yn[7]="nnnnnn";
 	
-	printf("Enter Starting Time:");
+	printf("\nEnter Starting Time:");
 	scanf("%s",start_time);
 	
 	printf("Enter End Time:");
 	scanf("%s",end_time);
 	
-	//fflush(stdin)//for windows
-	fpurge(stdin);//for linux
+	/** 
+	* for linux fpurge(stdin) is used to erase any input or output buffered 
+	* in stream. fflush(stdin)for windows
+	*/
+	fpurge(stdin);
 
 	printf("Enter components seperated with a space:");
 	scanf("%[^\n]",components);
@@ -341,8 +412,11 @@ int main_test(FILE *fp,FILE *fpout) {
 
 	char* token = strtok(components, " ");
 
-	// Keep printing tokens while one of the
-	// delimiters present in str[].
+	/** 
+	* By using strcmp and strtok, we set componenets_yn to y (yes) for the 
+	* components which the user had entered during runtime. 
+	* Keep printing tokens while one of the delimiters present in str[]. 
+	*/
 	while (token != NULL) {
     	if(strcmp(token,"sender1") == 0) {
         	components_yn[0]='y';
@@ -374,5 +448,10 @@ int main_test(FILE *fp,FILE *fpout) {
 	if(fp == NULL || fpout == NULL) {
 		printf("ERROR READING THE FILE");
 	}
+
+	/** 
+	* invokes the user_filter funtion with five parameters
+	* (file_input, start_time, end_time, component, file_output).
+	*/
 	user_filter(fp,t1,t2,c,fpout);
 }
