@@ -14,12 +14,12 @@
 * will contain message details between the above timeframe and messages 
 * only through subnet1.
 *
-* time			value	port				component
-* 00:00:20:000	1		packet_sent_out		sender1
-* 00:00:20:000	11		data_out			sender1
-* 00:00:36:000	1		ack_received_out	sender1
-* 00:00:46:000	2		packet_sent_out		sender1
-* 00:00:46:000	20		data_out			sender1
+* time           value  port              component
+* 00:00:20:000    1     packet_sent_out   sender1
+* 00:00:20:000   11     data_out          sender1
+* 00:00:36:000    1     ack_received_out  sender1
+* 00:00:46:000    2     packet_sent_out   sender1
+* 00:00:46:000   20     data_out          sender1
 */
 
 /**
