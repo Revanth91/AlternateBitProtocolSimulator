@@ -117,11 +117,12 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 		 `make clean; make all`
 4. To run the simulation, go the folder with executable files (i.e., bin folder) which was generated from the previous step. To do so, type in the terminal the path to this folder.
 		 Example: cd bin
-5. In the terminal type "./NAME_OF_THE_COMPILED_FILE NAME_OF_THE_INPUT_FILE". For this test you need to type:
-		 `./ABP ../data/input/abp_input_1.txt`
+5. In the terminal type "./NAME_OF_THE_COMPILED_FILE NAME_OF_THE_INPUT_FILE". For this test (on Linux) you need to type:
+		 `./ABP ../data/input/abp_input_1.txt`. 
+   If you're working on a windows system, please input `./ABP.exe ../data/input/abp_input_1.txt` in the terminal.
 6. While executing the above command, the simulation will be performed and terminal will prompt to enter start_time, end_time and components details. This is used to filter the output received from the simulator. Please proceed in entering the time in HH:MM:SS:SSS format and include a single space if entering multiple components. 
 7. To check the output of the simulation, go to `"../data/output/ "` folder, 
-	1. open **abp_output.txt** to see the actual output of the simulator. 
+	1. Open **abp_output.txt** to see the actual output of the simulator. 
 	2. Open **abp_processed_output.csv** file to see the output which are in understandable format. 
 	3. Open **abp_query_output.csv file** to see the output filtered as per the inputs given by user during runtime.
 8. To execute the simulator with different inputs,
@@ -137,12 +138,13 @@ For **Linux operating system**, there is a seperate set of instructions availabl
 	2. To run the unit tests, go the folder with executable files (i.e., bin folder). To do so, type in the 
 	   terminal the path to this folder. 
 	      Example: cd ../alternatebitprotocolsimulator/bin
-	3. To run the test, type in the terminal "./NAME_OF_THE_COMPILED_FILE". For this specific test you need 
+	3. To run the test, type in the terminal "./NAME_OF_THE_COMPILED_FILE". For this specific test (on Linux) you need 
 	   to type:
-		  `./SENDER_TEST`
+		  `./SENDER_TEST`. 
+		If you're working on a windows system, please input `./SENDER_TEST.exe` in the terminal. 
 	4. While executing the above command, the simulation will be performed and terminal will prompt to enter start_time, end_time and components details. This is used to filter the output received from the sender unit test. Please proceed in entering the time in HH:MM:SS:SSS format and include a single space if entering multiple components. 
   	5. To check the output of the simulation, go to `"../test/data/sender/ "` folder, 
-		1. open **sender_test_output.txt** to see the actual output of the simulator. 
+		1. Open **sender_test_output.txt** to see the actual output of the simulator. 
 		2. Open **sender_test_processed_output.csv** file to see the output which are in understandable format. 
 		3. Open **sender_test_query_output.csv file** to see the output filtered as per the inputs given by user during runtime.
 
