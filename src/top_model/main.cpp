@@ -228,6 +228,15 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     fclose(input);
     fclose(output);
     
+
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files 
+     * for the inputs (start_time, end_time, components) specified by the user
+     * during the run-time of the program. The formatting is performed with 
+     * the help of user_filter() function by passing the arguments 
+     * input and output. 
+     */
     FILE *fpp;
     FILE *fppout;
     fpp = fopen("../data/output/abp_output.txt","r");
