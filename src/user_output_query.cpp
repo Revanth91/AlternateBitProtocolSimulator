@@ -332,8 +332,8 @@ int main_test(FILE *fp,FILE *fpout) {
 	char components[1000];
 	char components_yn[7]="nnnnnn";
 	
-	printf("\nPlease enter the below details in small letters
-		  to receive specific outputs");
+	printf("\nPlease enter the below details in small letters");
+	printf("to receive specific outputs");
 	printf("\nEnter Start Time :");
 	scanf("%s",start_time);
 	
