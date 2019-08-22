@@ -23,8 +23,6 @@
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
 #define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_test_input.txt"
 
-void output_filter();
-
 using namespace std;
 
 using hclock=chrono::high_resolution_clock;
@@ -143,19 +141,13 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     filter(input,output);
     fclose(input);
     fclose(output);
-    output_filter();
 
+    FILE *fpp;
+    FILE *fppout;
+    fpp = fopen("../test/data/receiver/receiver_test_output.txt","r");
+    fppout = fopen("../test/data/receiver/receiver_test_query_output.csv","w");
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
     return 0;
-}
-
-void output_filter(){
-  FILE *fpp;
-  FILE *fppout;
-
-  fpp = fopen("../test/data/receiver/receiver_test_output.txt","r");
-  fppout = fopen("../test/data/receiver/receiver_test_query_output.csv","w");
-
-  main_test(fpp,fppout);
-  fclose(fpp);
-  fclose(fppout);
 }

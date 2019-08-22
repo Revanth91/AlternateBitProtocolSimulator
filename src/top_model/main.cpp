@@ -28,8 +28,6 @@
 #include "../transform.cpp"
 #include "../user_output_query.cpp"
 
-void output_filter();
-
 using namespace std;
 
 using hclock=chrono::high_resolution_clock;
@@ -229,18 +227,14 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     filter(input,output);
     fclose(input);
     fclose(output);
-    output_filter();
+    
+    FILE *fpp;
+    FILE *fppout;
+    fpp = fopen("../data/output/abp_output.txt","r");
+    fppout = fopen("../data/output/abp_query_output.csv","w");
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
+    
     return 0;
-}
-
-void output_filter(){
-  FILE *fpp;
-  FILE *fppout;
-
-  fpp = fopen("../data/output/abp_output.txt","r");
-  fppout = fopen("../data/output/abp_query_output.csv","w");
-
-  main_test(fpp,fppout);
-  fclose(fpp);
-  fclose(fppout);
 }

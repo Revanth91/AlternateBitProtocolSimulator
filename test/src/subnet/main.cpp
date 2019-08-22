@@ -24,8 +24,6 @@
 #define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_test_input.txt"
 #define SUBNET_OUTPUT_FILEPATH "../test/data/subnet/subnet_test_output.txt"
 
-void output_filter();
-
 using namespace std;
 using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
@@ -137,19 +135,14 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     filter(input,output);
     fclose(input);
     fclose(output);
-    output_filter();
     
-    return 0;
-}
-
-void output_filter(){
     FILE *fpp;
     FILE *fppout;
-
     fpp = fopen("../test/data/subnet/subnet_test_output.txt","r");
     fppout = fopen("../test/data/subnet/subnet_test_query_output.csv","w");
-
     main_test(fpp,fppout);
     fclose(fpp);
     fclose(fppout);
+    
+    return 0;
 }

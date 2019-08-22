@@ -33,8 +33,6 @@
 #define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_test_input_control.txt"
 #define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_test_input_ack.txt"
 
-void output_filter();
-
 using namespace std;
 using hclock = chrono::high_resolution_clock;
 using TIME = NDTime;
@@ -278,18 +276,15 @@ int main() {
     filter(input,output);
     fclose(input);
     fclose(output);
-    output_filter();
-
-    return 0;
-}
-void output_filter(){
+    
     FILE *fpp;
     FILE *fppout;
-
     fpp = fopen("../test/data/sender/sender_test_output.txt","r");
     fppout = fopen("../test/data/sender/sender_test_query_output.csv","w");
-
     main_test(fpp,fppout);
     fclose(fpp);
     fclose(fppout);
+
+    return 0;
 }
+
