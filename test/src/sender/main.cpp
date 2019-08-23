@@ -27,11 +27,11 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/sender_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/user_output_query.cpp"
 
 #define SENDER_OUTPUT_FILEPATH "../test/data/sender/sender_test_output.txt"
-#define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_input_test_control_in.txt"
-#define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_input_test_ack_in.txt"
-
+#define SENDER_CONTROL_FILEPATH "../test/data/sender/sender_test_input_control.txt"
+#define SENDER_ACKNOWLEDGE_FILEPATH "../test/data/sender/sender_test_input_ack.txt"
 
 using namespace std;
 using hclock = chrono::high_resolution_clock;
@@ -76,6 +76,7 @@ class ApplicationGen : public iestream_input<message_t, T> {
             file_path
         ) {}
 };
+
 
 int main() {
     /**
@@ -273,6 +274,25 @@ int main() {
     input = fopen("../test/data/sender/sender_test_output.txt","r");
     output = fopen("../test/data/sender/sender_test_processed_output.csv","w");
     filter(input,output);
+    fclose(input);
+    fclose(output);
+    
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files 
+     * for the inputs (start_time, end_time, components) specified by the user
+     * during the run-time of the program. The formatting is performed with 
+     * the help of user_filter() function by passing the arguments 
+     * input and output. 
+     */
+    FILE *fpp;
+    FILE *fppout;
+    fpp = fopen("../test/data/sender/sender_test_output.txt","r");
+    fppout = fopen("../test/data/sender/sender_test_query_output.csv","w");
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
 
     return 0;
 }
+

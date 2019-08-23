@@ -18,10 +18,10 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/receiver_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/user_output_query.cpp"
 
 #define RECEIVER_OUTPUT_FILEPATH "../test/data/receiver/receiver_test_output.txt"
-#define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_input_test.txt"
-
+#define RECEIVER_INPUT_FILEPATH "../test/data/receiver/receiver_test_input.txt"
 
 using namespace std;
 
@@ -139,6 +139,23 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     input = fopen("../test/data/receiver/receiver_test_output.txt","r");
     output = fopen("../test/data/receiver/receiver_test_processed_output.csv","w");
     filter(input,output);
-    
+    fclose(input);
+    fclose(output);
+
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files 
+     * for the inputs (start_time, end_time, components) specified by the user
+     * during the run-time of the program. The formatting is performed with 
+     * the help of user_filter() function by passing the arguments 
+     * input and output. 
+     */
+    FILE *fpp;
+    FILE *fppout;
+    fpp = fopen("../test/data/receiver/receiver_test_output.txt","r");
+    fppout = fopen("../test/data/receiver/receiver_test_query_output.csv","w");
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
     return 0;
 }

@@ -18,8 +18,10 @@
 #include "../../../include/data_structures/message.hpp"
 #include "../../../include/atomics/subnet_cadmium.hpp"
 #include "../../../src/transform.cpp"
+#include "../../../src/user_output_query.cpp"
 
-#define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_input_test.txt"
+
+#define SUBNET_INPUT_FILEPATH "../test/data/subnet/subnet_test_input.txt"
 #define SUBNET_OUTPUT_FILEPATH "../test/data/subnet/subnet_test_output.txt"
 
 using namespace std;
@@ -131,6 +133,24 @@ std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_share
     input = fopen("../test/data/subnet/subnet_test_output.txt","r");
     output = fopen("../test/data/subnet/subnet_test_processed_output.csv","w");
     filter(input,output);
+    fclose(input);
+    fclose(output);
+    
+    /**
+     * File pointers has been initiated to handle the file operation fopen() 
+     * to read from .txt files and write the formatted outputs in .csv files 
+     * for the inputs (start_time, end_time, components) specified by the user
+     * during the run-time of the program. The formatting is performed with 
+     * the help of user_filter() function by passing the arguments 
+     * input and output. 
+     */
+    FILE *fpp;
+    FILE *fppout;
+    fpp = fopen("../test/data/subnet/subnet_test_output.txt","r");
+    fppout = fopen("../test/data/subnet/subnet_test_query_output.csv","w");
+    main_test(fpp,fppout);
+    fclose(fpp);
+    fclose(fppout);
     
     return 0;
 }

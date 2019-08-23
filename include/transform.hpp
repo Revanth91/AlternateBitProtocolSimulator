@@ -4,12 +4,12 @@
 * all the unit tests (sender, subnet, receiver).
 *
 * for example (formatted output), 
-* time			value	port	        component
-* 00:00:10:000	5	    out				generator_con
-* 00:00:20:000	1	    packet_sent_out	sender1
-* 00:00:20:000	11	    data_out		sender1
-* 00:00:23:000	11	    out				subnet1
-* 00:00:33:000	1	    out				receiver1
+* time             value  port                 component
+* 00:00:10:000      5     out                  generator_con
+* 00:00:20:000      1     packet_sent_out      sender1
+* 00:00:20:000     11     data_out             sender1
+* 00:00:23:000     11     out                  subnet1
+* 00:00:33:000      1     out                  receiver1
 */
 
 /**
